@@ -8,8 +8,8 @@
 
 typedef struct s_data
 {
-	int				val;
-	pthread_mutex_t	mutex_val;
+	int				*p_val;
+	pthread_mutex_t	*p_mutex_val;
 }	t_data;
 
 
@@ -17,7 +17,7 @@ void	*routine(void *args)
 {
 	int		ret;
 	int		have_locked;
-	const t_data 	*datas;
+	t_data 	*datas;
 
 	datas = args;
 	have_locked = 0;
@@ -25,13 +25,13 @@ void	*routine(void *args)
 	{
 		if (have_locked == 0)
 		{
-			ret = pthread_mutex_trylock((pthread_mutex_t *)&datas[i].mutex_val);
+			ret = pthread_mutex_trylock(datas[i].p_mutex_val);
 			if (ret == 0)
 			{
 				have_locked = 1;
-				printf("locked mutex with data.val = %i\n", datas[i].val);
+				printf("locked mutex with data.val = %i\n", *(datas[i].p_val));
 				sleep(1);
-				ret = pthread_mutex_unlock((pthread_mutex_t *)&datas[i].mutex_val);
+				ret = pthread_mutex_unlock(datas[i].p_mutex_val);
 				if (ret != 0)
 					printf("pthread_mutex_unlock : %s\n", strerror(ret));
 			}
@@ -46,10 +46,14 @@ void	*routine(void *args)
 
 int	main(void)
 {
-	int		ret;
-	pthread_t	ts[NB_THREAD];
-	t_data	datas[NB_MUTEX];
+	int				ret;
+	pthread_t		ts[NB_THREAD];
+	int				val_ref[NB_MUTEX];
+	pthread_mutex_t	mutex_ref[NB_MUTEX];
+	t_data			datas[NB_THREAD][NB_MUTEX];
 
+
+	/*
 	printf("datas = %p\n", datas);
 	printf("&datas[0] = %p\n", &datas[0]);
 	printf("&datas[0].val = %p\n", &datas[0].val);
@@ -57,19 +61,28 @@ int	main(void)
 	printf("&datas[1].val = %p\n", &datas[1].val);
 	printf("&datas[2] = %p\n", &datas[2]);
 	printf("&datas[2].val = %p\n", &datas[2].val);
+	*/
 	for (int i = 0; i < NB_MUTEX; i++)
 	{
-		datas[i].val = i + 1;
+		val_ref[i] = i + 1;
 	}
 	for (int i = 0; i < NB_MUTEX; i++)
 	{
-		ret = pthread_mutex_init(&datas[i].mutex_val, NULL);
+		ret = pthread_mutex_init(&(mutex_ref[i]), NULL);
 		if (ret != 0)
 			printf("pthread_mutex_init : %s\n", strerror(ret));
 	}
 	for (int i = 0; i < NB_THREAD; i++)
 	{
-		ret = pthread_create(ts + i, NULL, &routine, datas);
+		for (int j = 0; j < NB_MUTEX; j++)
+		{
+			datas[i][j].p_val = val_ref + j;
+			datas[i][j].p_mutex_val = mutex_ref + j;
+		}
+	}
+	for (int i = 0; i < NB_THREAD; i++)
+	{
+		ret = pthread_create(ts + i, NULL, &routine, datas[i]);
 		if (ret != 0)
 			printf("pthread_create : %s\n", strerror(ret));
 		
@@ -83,7 +96,7 @@ int	main(void)
 	}
 	for (int i = 0; i < NB_MUTEX; i++)
 	{
-		ret = pthread_mutex_destroy(&datas[i].mutex_val);
+		ret = pthread_mutex_destroy(&mutex_ref[i]);
 		if (ret != 0)
 			printf("pthread_mutex_destroy : %s\n", strerror(ret));
 	}
