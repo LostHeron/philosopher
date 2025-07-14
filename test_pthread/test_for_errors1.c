@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include "ft_io.h"
 
 #define NB_MUTEX 3
 #define NB_THREAD 8
@@ -29,7 +30,7 @@ void	*routine(void *args)
 			if (ret == 0)
 			{
 				have_locked = 1;
-				printf("locked mutex with data.val = %i\n", datas[i].val);
+				ft_printf_fd(1, "locked mutex with data.val = %i\n", datas[i].val);
 				sleep(1);
 				ret = pthread_mutex_unlock((pthread_mutex_t *)&datas[i].mutex_val);
 				if (ret != 0)
@@ -38,9 +39,9 @@ void	*routine(void *args)
 		}
 	}
 	if (have_locked == 0)
-		printf("thread could not lock any !\n");
+		ft_printf_fd(1, "thread could not lock any !\n");
 	else
-		printf("this thread have locked some !\n");
+		ft_printf_fd(1, "this thread have locked some !\n");
 	return (NULL);
 }
 
