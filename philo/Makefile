@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/08/20 14:05:47 by jweber           ###   ########.fr        #
+#    Updated: 2025/08/20 17:34:55 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ C_FILES := philo.c \
 OBJECTS_DIR := .obj/
 OBJECTS_FILES := $(addprefix $(OBJECTS_DIR), $(C_FILES:.c=.o))
 DEPS := $(OBJECTS_FILES:.o=.d)
+
+.PHONY: all clean fclean re git git_update debug debug_clean debug_fclean debug_re
 
 all: $(NAME)
 
@@ -57,9 +59,14 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
+debug:
+	$(MAKE) OBJECTS_DIR=".obj_debug/" CFLAGS="$(CFLAGS) -g3"
 
-git:
-	git submodule update --init
+debug_clean:
+	$(MAKE) clean OBJECTS_DIR=".obj_debug/" CFLAGS="$(CFLAGS) -g3"
 
-git_update:
-	git submodule update --init --remote --recursive
+debug_fclean:
+	$(MAKE) fclean OBJECTS_DIR=".obj_debug/" CFLAGS="$(CFLAGS) -g3"
+
+debug_re:
+	$(MAKE) re OBJECTS_DIR=".obj_debug/" CFLAGS="$(CFLAGS) -g3" 
