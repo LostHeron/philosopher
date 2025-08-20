@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/08/20 17:34:55 by jweber           ###   ########.fr        #
+#    Updated: 2025/08/20 18:45:23 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,28 +19,43 @@ INCLUDES := -I includes/
 UTILS_DIR := src/utils/
 UTILS_FILES := ft_atoi.c \
 
+EXECUTION_DIR := src/execution/
+EXECUTION_FILES := start_philo.c \
+
+CLEAR_DIR := src/clear/
+CLEAR_FILES := clear_mutex.c \
+
 INIT_DIR := src/init/
 INIT_FILES := init_values.c \
+			  init_forks.c \
 
 C_FILES := philo.c \
 		   $(addprefix $(UTILS_DIR), $(UTILS_FILES)) \
-		   $(addprefix $(INIT_DIR), $(INIT_FILES))
+		   $(addprefix $(INIT_DIR), $(INIT_FILES)) \
+		   $(addprefix $(CLEAR_DIR), $(CLEAR_FILES)) \
+		   $(addprefix $(EXECUTION_DIR), $(EXECUTION_FILES)) \
 
 OBJECTS_DIR := .obj/
 OBJECTS_FILES := $(addprefix $(OBJECTS_DIR), $(C_FILES:.c=.o))
-DEPS := $(OBJECTS_FILES:.o=.d)
+D_FILES := $(OBJECTS_FILES:.o=.d)
 
 .PHONY: all clean fclean re git git_update debug debug_clean debug_fclean debug_re
 
 all: $(NAME)
 
--include $(DEPS)
+-include $(D_FILES)
 
 $(NAME): $(OBJECTS_FILES)
 	$(CC) $(INCLUDE) $(CFLAGS) $^ -o $@ 
 
-$(OBJECTS_DIR)%.o:%.c | $(OBJECTS_DIR)$(INIT_DIR) $(OBJECTS_DIR)$(UTILS_DIR)
+$(OBJECTS_DIR)%.o:%.c | $(OBJECTS_DIR)$(INIT_DIR) $(OBJECTS_DIR)$(UTILS_DIR) $(OBJECTS_DIR)$(CLEAR_DIR) $(OBJECTS_DIR)$(EXECUTION_DIR)
 	$(CC) -c -MMD -MP $(CFLAGS) $(INCLUDES) $< -o $@
+
+$(OBJECTS_DIR)$(EXECUTION_DIR):
+	mkdir -p $@
+
+$(OBJECTS_DIR)$(CLEAR_DIR):
+	mkdir -p $@
 
 $(OBJECTS_DIR)$(UTILS_DIR):
 	mkdir -p $@

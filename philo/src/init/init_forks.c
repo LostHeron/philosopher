@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 16:42:08 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/20 17:29:28 by jweber           ###   ########.fr       */
+/*   Updated: 2025/08/20 18:45:43 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	init_forks(int nb_philo, t_forks *p_forks)
 			printf("failed to initialize mutexes\n");
 			return (FAILURE);
 		}
+		i++;
 	}
 	return (SUCCESS);
 }

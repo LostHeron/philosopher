@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.h                                          :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 15:56:25 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/20 18:45:03 by jweber           ###   ########.fr       */
+/*   Created: 2025/08/20 18:42:54 by jweber            #+#    #+#             */
+/*   Updated: 2025/08/20 18:43:15 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_INIT_H
-# define FT_INIT_H
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
 # include "philo.h"
 
-int	init_values(int nb_arg, char **argv, t_philo_stat *p_philo_stat);
-int	init_forks(int nb_philo, t_forks *p_forks);
+int	start_philo(t_philo_stat philo_stat);
 
 #endif
