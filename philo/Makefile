@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/08/20 18:45:23 by jweber           ###   ########.fr        #
+#    Updated: 2025/08/21 14:09:21 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,14 @@ INCLUDES := -I includes/
 
 UTILS_DIR := src/utils/
 UTILS_FILES := ft_atoi.c \
+			   ft_get_time.c \
 
 EXECUTION_DIR := src/execution/
 EXECUTION_FILES := start_philo.c \
+				   launch_philo.c \
+
+ROUTINE_DIR := src/routine/
+ROUTINE_FILES := routine.c \
 
 CLEAR_DIR := src/clear/
 CLEAR_FILES := clear_mutex.c \
@@ -28,6 +33,7 @@ CLEAR_FILES := clear_mutex.c \
 INIT_DIR := src/init/
 INIT_FILES := init_values.c \
 			  init_forks.c \
+			  init_arr_philo.c \
 
 C_FILES := philo.c \
 		   $(addprefix $(UTILS_DIR), $(UTILS_FILES)) \

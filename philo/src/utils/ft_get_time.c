@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   ft_get_time.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 18:42:54 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 13:04:35 by jweber           ###   ########.fr       */
+/*   Created: 2025/08/21 14:07:59 by jweber            #+#    #+#             */
+/*   Updated: 2025/08/21 14:14:45 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#include <sys/time.h>
+#include <stdlib.h>
 
-# include "philo.h"
+int	ft_get_time(long long *p_time)
+{
+	int				ret;
+	struct timeval	tv;
 
-int	start_philo(t_philo_stat philo_stat);
-int	launch_philo(t_philo_stat *p_philo_stat, t_philo *arr_philo);
-
-#endif
+	ret = gettimeofday(&tv, NULL);
+	if (ret < 0)
+	{
+		return (ret);
+	}
+	*p_time = tv.tv_sec * 1000000;
+	*p_time += tv.tv_usec;
+	return (0);
+}

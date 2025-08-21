@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   routine.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 18:42:54 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 13:04:35 by jweber           ###   ########.fr       */
+/*   Created: 2025/08/21 13:37:28 by jweber            #+#    #+#             */
+/*   Updated: 2025/08/21 14:40:03 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#ifndef ROUTINE_H
+# define ROUTINE_H
 
 # include "philo.h"
 
-int	start_philo(t_philo_stat philo_stat);
-int	launch_philo(t_philo_stat *p_philo_stat, t_philo *arr_philo);
+void	*routine(void *args);
+int		print_message_philo(t_philo *p_philo, char *str);
+int		try_eat(t_philo *p_philo);
+int		try_sleep(t_philo *p_philo);
+int		try_think(t_philo *p_philo);
 
 #endif

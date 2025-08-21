@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   try_sleep.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 18:42:54 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 13:04:35 by jweber           ###   ########.fr       */
+/*   Created: 2025/08/21 14:19:48 by jweber            #+#    #+#             */
+/*   Updated: 2025/08/21 14:35:55 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#include "philo.h"
+#include "routine.h"
+#include <unistd.h>
 
-# include "philo.h"
+int	try_sleep(t_philo *p_philo)
+{
+	int			ret;
 
-int	start_philo(t_philo_stat philo_stat);
-int	launch_philo(t_philo_stat *p_philo_stat, t_philo *arr_philo);
-
-#endif
+	ret = print_message_philo(p_philo, "is sleeping");
+	if (ret != 0)
+		return (ret);
+	usleep(p_philo->time_to_sleep);
+	return (0);
+}
