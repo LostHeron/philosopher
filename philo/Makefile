@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/08/21 14:09:21 by jweber           ###   ########.fr        #
+#    Updated: 2025/08/27 18:22:16 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,14 @@ EXECUTION_FILES := start_philo.c \
 
 ROUTINE_DIR := src/routine/
 ROUTINE_FILES := routine.c \
+				 try_eat.c \
+				 try_take_forks.c \
+				 eat.c \
+				 try_sleep.c \
+				 try_think.c \
+				 print_message_philo.c \
+				 kill_philo.c \
+				 check_death.c \
 
 CLEAR_DIR := src/clear/
 CLEAR_FILES := clear_mutex.c \
@@ -40,6 +48,7 @@ C_FILES := philo.c \
 		   $(addprefix $(INIT_DIR), $(INIT_FILES)) \
 		   $(addprefix $(CLEAR_DIR), $(CLEAR_FILES)) \
 		   $(addprefix $(EXECUTION_DIR), $(EXECUTION_FILES)) \
+		   $(addprefix $(ROUTINE_DIR), $(ROUTINE_FILES)) \
 
 OBJECTS_DIR := .obj/
 OBJECTS_FILES := $(addprefix $(OBJECTS_DIR), $(C_FILES:.c=.o))
@@ -54,8 +63,11 @@ all: $(NAME)
 $(NAME): $(OBJECTS_FILES)
 	$(CC) $(INCLUDE) $(CFLAGS) $^ -o $@ 
 
-$(OBJECTS_DIR)%.o:%.c | $(OBJECTS_DIR)$(INIT_DIR) $(OBJECTS_DIR)$(UTILS_DIR) $(OBJECTS_DIR)$(CLEAR_DIR) $(OBJECTS_DIR)$(EXECUTION_DIR)
+$(OBJECTS_DIR)%.o:%.c | $(OBJECTS_DIR)$(INIT_DIR) $(OBJECTS_DIR)$(UTILS_DIR) $(OBJECTS_DIR)$(CLEAR_DIR) $(OBJECTS_DIR)$(EXECUTION_DIR) $(OBJECTS_DIR)$(ROUTINE_DIR)
 	$(CC) -c -MMD -MP $(CFLAGS) $(INCLUDES) $< -o $@
+
+$(OBJECTS_DIR)$(ROUTINE_DIR):
+	mkdir -p $@
 
 $(OBJECTS_DIR)$(EXECUTION_DIR):
 	mkdir -p $@

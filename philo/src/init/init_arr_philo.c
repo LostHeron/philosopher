@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:12:13 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 13:14:40 by jweber           ###   ########.fr       */
+/*   Updated: 2025/08/27 18:44:35 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  *	right fork and mutex and stats from philo_stat
 */
 int	init_arr_philo(t_philo_stat philo_stat,
-			t_forks forks, t_philo **p_arr_philo)
+			t_forks forks, t_philo **p_arr_philo, long long ref_time)
 {
 	int	i;
 
@@ -42,6 +42,7 @@ int	init_arr_philo(t_philo_stat philo_stat,
 		(*p_arr_philo)[i].time_to_sleep = philo_stat.time_to_sleep;
 		(*p_arr_philo)[i].nb_time_to_eat = philo_stat.nb_time_each_one_eats;
 		(*p_arr_philo)[i].p_printf_mutex = &forks.printf_mutex;
+		(*p_arr_philo)[i].ref_time = ref_time;
 		i++;
 	}
 	return (0);

@@ -33,6 +33,7 @@ int	init_forks(int nb_philo, t_forks *p_forks)
 	while (i < nb_philo)
 	{
 		p_forks->array_forks[i] = AVAILABLE;
+		i++;
 	}
 	p_forks->array_forks_mutex = malloc(nb_philo * sizeof(pthread_mutex_t));
 	if (p_forks->array_forks_mutex == NULL)

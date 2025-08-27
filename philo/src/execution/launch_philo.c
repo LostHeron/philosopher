@@ -6,16 +6,15 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:49:08 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 16:54:32 by jweber           ###   ########.fr       */
+/*   Updated: 2025/08/27 16:35:43 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "routine.h"
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-static void	*routine(void *args);
 
 int	launch_philo(t_philo_stat *p_philo_stat, t_philo *arr_philo)
 {

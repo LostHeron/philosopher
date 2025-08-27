@@ -6,36 +6,75 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:04 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 15:59:46 by jweber           ###   ########.fr       */
+/*   Updated: 2025/08/27 18:31:26 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "utils.h"
 #include "routine.h"
 #include <stdio.h>
 #include <pthread.h>
 
 void	*routine(void *args)
 {
-	t_philo			*p_philo;
-	int				nb_time_eaten;
-	int				stop_exec;
+	t_philo		*p_philo;
+	int			nb_time_eaten;
+	int			stop;
+	int			ret;
+	long long	last_meal;
 
 	p_philo = args;
 	nb_time_eaten = 0;
-	pthread_mutex_lock(p_philo->p_printf_mutex);
-	printf("philo nb = %i\n", p_philo->philo_id);
+	ret = pthread_mutex_lock(p_philo->p_printf_mutex);
+	if (ret != 0)
+	{
+		kill_philo(p_philo->p_stop_exec_mutex, p_philo->p_stop_exec);
+		return (NULL);
+	}
+	printf("philo id = %i\n", p_philo->philo_id);
 	pthread_mutex_unlock(p_philo->p_printf_mutex);
-	stop_exec = FALSE;
-	while (stop_exec == FALSE && (p_philo->nb_time_to_eat < 0
+	stop = FALSE;
+	ret = ft_get_time(&last_meal);
+	if (ret != 0)
+	{
+		kill_philo(p_philo->p_stop_exec_mutex, p_philo->p_stop_exec);
+		return (NULL); // return something ?
+	}
+	while (stop == FALSE && (p_philo->nb_time_to_eat < 0
 			|| nb_time_eaten < p_philo->nb_time_to_eat))
 	{
-		try_eat(p_philo);
+		ret = try_eat(p_philo, &last_meal, &stop);
+		if (ret != 0 || stop == TRUE)
+		{
+			int	new_ret;
+			new_ret = kill_philo(p_philo->p_stop_exec_mutex,
+					p_philo->p_stop_exec);
+			if (new_ret != 0)
+			{
+				// what to do ?
+			}
+			return (NULL);
+		}
 		nb_time_eaten++;
-		try_think(p_philo);
-		check_death(p_philo);
-		try_sleep(p_philo);
-		is_ok_check_other_ok();
+		/*
+		 * commented beacuse is set inside try_eat !
+		ret = ft_get_time(&last_meal);
+		if (ret != 0)
+		{
+			//;
+		}
+		*/
+		ret = try_sleep(p_philo, last_meal, &stop);
+		if (ret != 0 || stop == TRUE)
+		{
+			return (NULL);//
+		}
+		ret = try_think(p_philo, &stop);
+		if (ret != 0 || stop == TRUE)
+		{
+			return (NULL);//
+		}
 	}
 	return (NULL);
 }

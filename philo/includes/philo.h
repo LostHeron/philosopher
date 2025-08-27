@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:51:17 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 14:38:59 by jweber           ###   ########.fr       */
+/*   Updated: 2025/08/27 18:42:58 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,18 @@ typedef struct s_forks
 typedef struct s_philo
 {
 	int				philo_id;
+	int				nb_time_to_eat;
+	long long		ref_time;
 	int				*p_left_fork;
 	pthread_mutex_t	*p_left_fork_mutex;
 	int				*p_right_fork;
 	pthread_mutex_t	*p_right_fork_mutex;
 	int				*p_stop_exec;
 	pthread_mutex_t	*p_stop_exec_mutex;
+	pthread_mutex_t	*p_printf_mutex;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				nb_time_to_eat;
-	pthread_mutex_t	*p_printf_mutex;
 }				t_philo;
 
 #endif

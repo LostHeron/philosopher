@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_time.c                                      :+:      :+:    :+:   */
+/*   kill_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 14:07:59 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/26 13:28:08 by jweber           ###   ########.fr       */
+/*   Created: 2025/08/26 10:46:07 by jweber            #+#    #+#             */
+/*   Updated: 2025/08/27 14:11:43 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/time.h>
+#include <pthread.h>
 #include "philo.h"
-#include <stdlib.h>
 
-/* This function should put the current time from Epoch (1970-01-01 00:00:00
- * +0000 (UTC).) in millisecond (ms) in the variable passed
- * by reference (p_time).
- * If gettimeofday fail, return 1;
- * else return success !
+/* This function should
+ *	set *p_stop_exec to true, by locking mutex associated with the value before
+ *	doing so
+ *		-> If mutex_lock fail, return an error,
+ *		-> else return (SUCCESS);
 */
-int	ft_get_time(long long *p_time)
+int	kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec)
 {
-	int				ret;
-	struct timeval	tv;
+	int	ret;
 
-	ret = gettimeofday(&tv, NULL);
-	if (ret < 0)
-	{
+	ret = pthread_mutex_lock(p_stop_exec_mutex);
+	if (ret != 0)
 		return (ret);
-	}
-	*p_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	*p_stop_exec = TRUE;
+	pthread_mutex_unlock(p_stop_exec_mutex);
 	return (SUCCESS);
 }

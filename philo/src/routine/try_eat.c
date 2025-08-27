@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:47:39 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 15:59:18 by jweber           ###   ########.fr       */
+/*   Updated: 2025/08/27 18:38:53 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,90 @@
 #include <pthread.h>
 #include <unistd.h>
 
-int	try_eat(t_philo *p_philo)
+static int	free_forks(t_philo *p_philo);
+
+/* this function should make the philosopher eat
+ * step by step, using OPERATION STEP;
+ * after each step, it should: 
+ *	-> check if any other philosopher as died, by locking
+ *		the mutex associated with p_stop_exec, if one as died,
+ *		then we must return and stop the execution;
+ *	-> then check if the philosopher died, and if so, 
+ *		it should update the value p_philo->p_stop_exec, 
+ *		by first locking the mutex
+ * This function should :
+ *	-> return (1) if any thing had an error, or if we should stop the 
+ *	execution 
+ *	-> return (0) if everything happened well and execution should continue;
+ *	args:
+ *		-> last_meal : time this thread last ate (to compare if thread died !)
+*/
+int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 {
 	int			ret;
+	int			can_eat;
+	int			is_dead;
 
-	ret = print_message_philo(p_philo, "is eating");
-	if (ret != 0)
+	can_eat = FALSE;
+	while (can_eat != TRUE)
+	{
+		ret = check_death(p_philo, *p_last_meal, &is_dead);
+		if (ret != 0)
+		{
+			// what to do return ?
+			return (ret);
+		}
+		if (is_dead == TRUE)
+		{
+			*p_stop = TRUE;
+			// something else ?
+			return (ret);
+		}
+		ret = try_take_forks(p_philo, &can_eat);
+		if (ret != 0)
+		{
+			// what more to do too here ?
+			// say this thread has died to other thread ?
+			return (ret);
+		}
+	}
+	ret = eat(p_philo, p_last_meal, p_stop);
+	if (ret != 0 || *p_stop == TRUE)
+	{
+		// what else to do in case of failure ?
+		// kill philo ? or has been done inside eat ?
+		free_forks(p_philo);
 		return (ret);
-	//p_philo->nb_time_to_eat;
-	pthread_mutex_lock(p_philo->p_right_fork_mutex);
-	*p_philo->p_right_fork = UNAVAILABLE;
-	pthread_mutex_lock(p_philo->p_left_fork_mutex);
-	*p_philo->p_left_fork = UNAVAILABLE;
-	// start eating
-	usleep(OPERATION_STEP);
-	check_death();
+	}
+	ret = free_forks(p_philo);
+	if (ret != 0)
+	{
+		return (ret);
+	}
+	return (SUCCESS);
+}
+
+/* This function reputs the status of right and left forks to AVAILABLE
+ * by locking the mutex associated with the forks !
+ *
+*/
+static int	free_forks(t_philo *p_philo)
+{
+	int	ret;
+
+	ret = pthread_mutex_lock(p_philo->p_right_fork_mutex);
+	if (ret != 0)
+	{
+		return (ret);
+	}
 	*p_philo->p_right_fork = AVAILABLE;
-	*p_philo->p_left_fork = AVAILABLE;
 	pthread_mutex_unlock(p_philo->p_right_fork_mutex);
+	ret = pthread_mutex_lock(p_philo->p_left_fork_mutex);
+	if (ret != 0)
+	{
+		return (ret);
+	}
+	*p_philo->p_left_fork = AVAILABLE;
 	pthread_mutex_unlock(p_philo->p_left_fork_mutex);
-	// done eating 
-	return (0);
+	return (SUCCESS);
 }
