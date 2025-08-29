@@ -21,12 +21,6 @@ enum e_step
 	OPERATION_STEP = 5,
 };
 
-enum e_errors
-{
-	ERROR_MALLOC = -3,
-	ERROR_WRITE = -4,
-};
-
 enum e_status
 {
 	SUCCESS,
@@ -61,6 +55,7 @@ typedef struct s_forks
 	int				stop_exec;
 	pthread_mutex_t	stop_exec_mutex;
 	pthread_mutex_t	printf_mutex;
+	pthread_mutex_t	start_mutex;
 }				t_forks;
 
 typedef struct s_philo
@@ -78,6 +73,7 @@ typedef struct s_philo
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	pthread_mutex_t	*p_start_mutex;
 }				t_philo;
 
 #endif

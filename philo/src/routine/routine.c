@@ -16,6 +16,9 @@
 #include <stdio.h>
 #include <pthread.h>
 
+/* This is the main starting point for each thread !
+ * if a thread need to be killed, it should be done here ?
+*/
 void	*routine(void *args)
 {
 	t_philo		*p_philo;
@@ -25,7 +28,8 @@ void	*routine(void *args)
 	long long	last_meal;
 
 	p_philo = args;
-	nb_time_eaten = 0;
+	pthread_mutex_lock(p_philo->p_start_mutex);
+	pthread_mutex_unlock(p_philo->p_start_mutex);
 	ret = pthread_mutex_lock(p_philo->p_printf_mutex);
 	if (ret != 0)
 	{
@@ -34,16 +38,33 @@ void	*routine(void *args)
 	}
 	printf("philo id = %i\n", p_philo->philo_id);
 	pthread_mutex_unlock(p_philo->p_printf_mutex);
-	stop = FALSE;
 	ret = ft_get_time(&last_meal);
 	if (ret != 0)
 	{
 		kill_philo(p_philo->p_stop_exec_mutex, p_philo->p_stop_exec);
 		return (NULL); // return something ?
 	}
+	ret = check_death(p_philo, last_meal, &stop);
+	if (ret != 0)
+	{
+		// do stuff ?
+		return (NULL);
+	}
+	if (stop == TRUE)
+	{
+		// do stuff ?
+		return (NULL);
+	}
+	nb_time_eaten = 0;
+	stop = FALSE;
 	while (stop == FALSE && (p_philo->nb_time_to_eat < 0
 			|| nb_time_eaten < p_philo->nb_time_to_eat))
 	{
+		ret = try_think(p_philo, &stop);
+		if (ret != 0 || stop == TRUE)
+		{
+			return (NULL);//
+		}
 		ret = try_eat(p_philo, &last_meal, &stop);
 		if (ret != 0 || stop == TRUE)
 		{
@@ -57,20 +78,7 @@ void	*routine(void *args)
 			return (NULL);
 		}
 		nb_time_eaten++;
-		/*
-		 * commented beacuse is set inside try_eat !
-		ret = ft_get_time(&last_meal);
-		if (ret != 0)
-		{
-			//;
-		}
-		*/
 		ret = try_sleep(p_philo, last_meal, &stop);
-		if (ret != 0 || stop == TRUE)
-		{
-			return (NULL);//
-		}
-		ret = try_think(p_philo, &stop);
 		if (ret != 0 || stop == TRUE)
 		{
 			return (NULL);//

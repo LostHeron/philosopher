@@ -10,21 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
 #include <pthread.h>
 #include <stdlib.h>
 
-void	clear_mutex(t_forks *p_forks, int nb_clear)
+/* This function take an array of nb_to_clear mutexes,
+ * it destroys each mutexes one by one then free the array of mutexes !
+*/
+void	clear_mutex(pthread_mutex_t *array_forks_mutex, int nb_to_clear)
 {
 	int	i;
 
-	free(p_forks->array_forks);
 	i = 0;
-	while (i < nb_clear)
+	while (i < nb_to_clear)
 	{
-		pthread_mutex_destroy(p_forks->array_forks_mutex + i);
+		pthread_mutex_destroy(array_forks_mutex + i);
 		i++;
 	}
-	free(p_forks->array_forks_mutex);
+	free(array_forks_mutex);
 	return ;
 }

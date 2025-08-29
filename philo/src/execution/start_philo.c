@@ -23,20 +23,13 @@ int	start_philo(t_philo_stat philo_stat)
 	t_forks			forks;
 	t_philo			*arr_philo;
 	int				ret;
-	long long		ref_time;
 
 	ret = init_forks(philo_stat.nb_philo, &forks);
 	if (ret != SUCCESS)
 	{
 		return (FAILURE);
 	}
-	ret = ft_get_time(&ref_time);
-	if (ret != 0)
-	{
-		// do stuff !
-		return (FAILURE);
-	}
-	ret = init_arr_philo(philo_stat, forks, &arr_philo, ref_time);
+	ret = init_arr_philo(philo_stat, forks, &arr_philo);
 	if (ret != SUCCESS)
 	{
 		// do stuff ?
@@ -47,5 +40,6 @@ int	start_philo(t_philo_stat philo_stat)
 	free(arr_philo);
 	pthread_mutex_destroy(&forks.stop_exec_mutex);
 	pthread_mutex_destroy(&forks.printf_mutex);
+	pthread_mutex_destroy(&forks.start_mutex);
 	return (ret);
 }

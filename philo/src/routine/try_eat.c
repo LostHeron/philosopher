@@ -12,6 +12,7 @@
 
 #include "philo.h"
 #include "routine.h"
+#include "utils.h"
 #include <pthread.h>
 #include <unistd.h>
 
@@ -61,6 +62,17 @@ int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 			// say this thread has died to other thread ?
 			return (ret);
 		}
+		long long current_time;
+		ft_get_time(&current_time);
+		if (can_eat == TRUE)
+			print_message_philo(p_philo->p_printf_mutex,
+				current_time - p_philo->ref_time, p_philo->philo_id, 
+				"##### philosopher can eat !\n");
+		else
+			print_message_philo(p_philo->p_printf_mutex,
+				current_time - p_philo->ref_time, p_philo->philo_id, 
+				"##### philosopher can NOT eat !\n");
+		usleep(500);
 	}
 	ret = eat(p_philo, p_last_meal, p_stop);
 	if (ret != 0 || *p_stop == TRUE)

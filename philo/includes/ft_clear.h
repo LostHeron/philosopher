@@ -13,8 +13,8 @@
 #ifndef FT_CLEAR_H
 # define FT_CLEAR_H
 
-# include "philo.h"
+# include <pthread.h>
 
-void	clear_mutex(t_forks *p_forks, int nb_clear);
+void	clear_mutex(pthread_mutex_t *array_forks_mutex, int nb_to_clear);
 
 #endif

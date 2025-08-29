@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "routine.h"
+#include "utils.h"
 #include <pthread.h>
 
 static int	try_lock_fork(pthread_mutex_t *p_fork_mutex, int *p_fork,
@@ -19,10 +21,12 @@ static int	free_fork(pthread_mutex_t *p_fork_mutex, int *p_fork);
 
 int	try_take_forks(t_philo *p_philo, int *p_can_eat)
 {
-	int	ret;
-	int	right_fork_locked;
-	int	left_fork_locked;
+	int			ret;
+	int			right_fork_locked;
+	int			left_fork_locked;
+	long long	current_time;
 
+	*p_can_eat = FALSE;
 	right_fork_locked = FALSE;
 	left_fork_locked = FALSE;
 	ret = try_lock_fork(p_philo->p_right_fork_mutex, p_philo->p_right_fork,
@@ -34,20 +38,39 @@ int	try_take_forks(t_philo *p_philo, int *p_can_eat)
 	}
 	if (right_fork_locked == TRUE)
 	{
+		ret = ft_get_time(&current_time);
+		if (ret != 0)
+		{
+			// what else to do ?
+			return (ret);
+		}
+		print_message_philo(p_philo->p_printf_mutex,
+			current_time - p_philo->ref_time, p_philo->philo_id,
+			"Has taken right fork\n");
 		ret = try_lock_fork(p_philo->p_left_fork_mutex, p_philo->p_left_fork,
 				&left_fork_locked);
 		if (ret != 0)
 		{
-			// something else ?
-			// free right fork ?? -> yes I think !
 			return (ret);
 		}
 		if (left_fork_locked == TRUE)
 		{
+			ret = ft_get_time(&current_time);
+			if (ret != 0)
+			{
+				// what else to do ?
+				return (ret);
+			}
+			print_message_philo(p_philo->p_printf_mutex,
+				current_time - p_philo->ref_time, p_philo->philo_id,
+				"Has taken left fork\n");
 			*p_can_eat = TRUE;
 		}
 		else
 		{
+			print_message_philo(p_philo->p_printf_mutex,
+				current_time - p_philo->ref_time, p_philo->philo_id,
+				"Could not take left fork\n");
 			ret = free_fork(p_philo->p_right_fork_mutex, p_philo->p_right_fork);
 			if (ret != 0)
 			{
@@ -55,6 +78,18 @@ int	try_take_forks(t_philo *p_philo, int *p_can_eat)
 				return (ret);
 			}
 		}
+	}
+	else
+	{
+		ret = ft_get_time(&current_time);
+		if (ret != 0)
+		{
+			// what else to do ?
+			return (ret);
+		}
+		print_message_philo(p_philo->p_printf_mutex,
+			current_time - p_philo->ref_time, p_philo->philo_id,
+			"Could not take right fork\n");
 	}
 	return (SUCCESS);
 }

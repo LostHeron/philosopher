@@ -18,6 +18,6 @@
 int	init_values(int nb_arg, char **argv, t_philo_stat *p_philo_stat);
 int	init_forks(int nb_philo, t_forks *p_forks);
 int	init_arr_philo(t_philo_stat philo_stat,
-		t_forks forks, t_philo **p_arr_philo, long long ref_time);
+		t_forks forks, t_philo **p_arr_philo);
 
 #endif
