@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_philo.c                                      :+:      :+:    :+:   */
+/*   clear_all.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 16:37:04 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/01 13:09:59 by jweber           ###   ########.fr       */
+/*   Created: 2025/09/01 12:38:55 by jweber            #+#    #+#             */
+/*   Updated: 2025/09/01 12:59:23 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include "execution.h"
+#include "ft_clear.h"
 #include <pthread.h>
+#include <stdlib.h>
 
-int	start_philo(t_simu_stat simu_stat, t_philo **p_arr_philo)
+void	clear_all(t_mutexes *p_mutexes, t_philo **p_arr_philo, int nb_philo)
 {
-	int				ret;
-
-	ret = launch_philo(&simu_stat, *p_arr_philo);
-	return (ret);
+	clear_mutex(&p_mutexes->array_forks_mutex, nb_philo);
+	free(p_mutexes->array_forks);
+	p_mutexes->array_forks = NULL;
+	free(*p_arr_philo);
+	*p_arr_philo = NULL;
+	pthread_mutex_destroy(&p_mutexes->stop_exec_mutex);
+	pthread_mutex_destroy(&p_mutexes->printf_mutex);
+	pthread_mutex_destroy(&p_mutexes->start_mutex);
+	return ;
 }

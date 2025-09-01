@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/09/01 12:14:44 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/01 13:03:43 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,12 @@ ROUTINE_FILES := routine.c \
 
 CLEAR_DIR := src/clear/
 CLEAR_FILES := clear_mutex.c \
+			   clear_all.c \
 
 INIT_DIR := src/init/
 INIT_FILES := init_values.c \
-			  init_forks.c \
+			  init_philos.c \
+			  init_mutexes.c \
 			  init_arr_philo.c \
 
 C_FILES := philo.c \

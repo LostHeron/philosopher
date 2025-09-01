@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:54:49 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/01 12:18:29 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 13:09:45 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,62 +14,62 @@
 #include "utils.h"
 #include <stdio.h>
 
-static int	check_values(int nb_arg, t_philo_stat *p_philo_stat);
-static int	last_check(int nb_arg, t_philo_stat *p_philo_stat);
+static int	check_values(int nb_arg, t_simu_stat *p_simu_stat);
+static int	last_check(int nb_arg, t_simu_stat *p_simu_stat);
 
-int	init_values(int nb_arg, char **argv, t_philo_stat *p_philo_stat)
+int	init_values(int nb_arg, char **argv, t_simu_stat *p_simu_stat)
 {
 	int	ret;
 
-	ret = ft_atoi_safe(argv[0], &p_philo_stat->nb_philo);
+	ret = ft_atoi_safe(argv[0], &p_simu_stat->nb_philo);
 	if (ret != 0)
 		return (print_error_atoi_safe(ret));
-	ret = ft_atoi_safe(argv[1], &p_philo_stat->time_to_die);
+	ret = ft_atoi_safe(argv[1], &p_simu_stat->time_to_die);
 	if (ret != 0)
 		return (print_error_atoi_safe(ret));
-	ret = ft_atoi_safe(argv[2], &p_philo_stat->time_to_eat);
+	ret = ft_atoi_safe(argv[2], &p_simu_stat->time_to_eat);
 	if (ret != 0)
 		return (print_error_atoi_safe(ret));
-	ret = ft_atoi_safe(argv[3], &p_philo_stat->time_to_sleep);
+	ret = ft_atoi_safe(argv[3], &p_simu_stat->time_to_sleep);
 	if (nb_arg == 5)
 	{
-		ret = ft_atoi_safe(argv[4], &p_philo_stat->nb_time_each_one_eats);
+		ret = ft_atoi_safe(argv[4], &p_simu_stat->nb_time_each_one_eats);
 		if (ret != 0)
 			return (print_error_atoi_safe(ret));
 	}
 	else
-		p_philo_stat->nb_time_each_one_eats = -1;
-	return (check_values(nb_arg, p_philo_stat));
+		p_simu_stat->nb_time_each_one_eats = -1;
+	return (check_values(nb_arg, p_simu_stat));
 }
 
-static int	check_values(int nb_arg, t_philo_stat *p_philo_stat)
+static int	check_values(int nb_arg, t_simu_stat *p_simu_stat)
 {
-	if (p_philo_stat->nb_philo <= 0)
+	if (p_simu_stat->nb_philo <= 0)
 	{
 		printf("nb_philo must be strictly greater than 0\n");
 		return (FAILURE);
 	}
-	if (p_philo_stat->time_to_die < 0)
+	if (p_simu_stat->time_to_die < 0)
 	{
 		printf("time_to_die can not be negative\n");
 		return (FAILURE);
 	}
-	if (p_philo_stat->time_to_eat < 0)
+	if (p_simu_stat->time_to_eat < 0)
 	{
 		printf("time_to_eat can not be negative\n");
 		return (FAILURE);
 	}
-	if (p_philo_stat->time_to_sleep < 0)
+	if (p_simu_stat->time_to_sleep < 0)
 	{
 		printf("time_to_sleep can not be negative\n");
 		return (FAILURE);
 	}
-	return (last_check(nb_arg, p_philo_stat));
+	return (last_check(nb_arg, p_simu_stat));
 }
 
-static int	last_check(int nb_arg, t_philo_stat *p_philo_stat)
+static int	last_check(int nb_arg, t_simu_stat *p_simu_stat)
 {
-	if (nb_arg == 5 && p_philo_stat->nb_time_each_one_eats < 0)
+	if (nb_arg == 5 && p_simu_stat->nb_time_each_one_eats < 0)
 	{
 		printf("nb_time_each_philo_must_eat can not be negative\n");
 		return (FAILURE);

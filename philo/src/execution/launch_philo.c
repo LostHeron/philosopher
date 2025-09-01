@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:49:08 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/28 13:29:02 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 13:11:54 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 
 static int	init_ref_time(t_philo *arr_philo, int nb_philo);
 
-int	launch_philo(t_philo_stat *p_philo_stat, t_philo *arr_philo)
+int	launch_philo(t_simu_stat *p_simu_stat, t_philo *arr_philo)
 {
 	int			i;
 	pthread_t	*arr_th_philo;
 	int			ret;
 
-	arr_th_philo = malloc(p_philo_stat->nb_philo * sizeof(pthread_t));
+	arr_th_philo = malloc(p_simu_stat->nb_philo * sizeof(pthread_t));
 	if (arr_th_philo == NULL)
 		return (FAILURE);
 	i = 0;
 	pthread_mutex_lock(arr_philo->p_start_mutex);
-	while (i < p_philo_stat->nb_philo)
+	while (i < p_simu_stat->nb_philo)
 	{
 		ret = pthread_create(arr_th_philo + i, NULL, &routine, arr_philo + i);
 		if (ret != 0)
@@ -50,10 +50,10 @@ int	launch_philo(t_philo_stat *p_philo_stat, t_philo *arr_philo)
 		}
 		i++;
 	}
-	init_ref_time(arr_philo, p_philo_stat->nb_philo);
+	init_ref_time(arr_philo, p_simu_stat->nb_philo);
 	pthread_mutex_unlock(arr_philo->p_start_mutex);
 	i = 0;
-	while (i < p_philo_stat->nb_philo)
+	while (i < p_simu_stat->nb_philo)
 	{
 		ret = pthread_join(arr_th_philo[i], NULL);
 		if (ret != 0)

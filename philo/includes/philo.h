@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:51:17 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/27 18:42:58 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 13:04:28 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ enum e_available
 	UNAVAILABLE,
 };
 
-typedef struct s_philo_stat
+typedef struct s_simu_stat
 {
 	int	nb_philo;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	nb_time_each_one_eats;
-}	t_philo_stat;
+}	t_simu_stat;
 
-typedef struct s_forks
+typedef struct s_mutexes
 {
 	int				*array_forks;
 	pthread_mutex_t	*array_forks_mutex;
@@ -56,7 +56,7 @@ typedef struct s_forks
 	pthread_mutex_t	stop_exec_mutex;
 	pthread_mutex_t	printf_mutex;
 	pthread_mutex_t	start_mutex;
-}				t_forks;
+}				t_mutexes;
 
 typedef struct s_philo
 {

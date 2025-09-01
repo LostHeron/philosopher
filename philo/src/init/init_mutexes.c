@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_forks.c                                       :+:      :+:    :+:   */
+/*   init_mutexes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 16:42:08 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 14:38:55 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 12:54:56 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,29 @@
 static int	init_array_forks(int **p_array_forks, int nb_philo);
 static int	init_array_forks_mutex(pthread_mutex_t **p_array_forks_mutex,
 				int nb_philo);
-static int	init_other_mutex(t_forks *p_forks);
+static int	init_other_mutex(t_mutexes *p_mutexes);
 
 /*		This function should initialize the different forks 
  *	and init each mutex associated with the forks 
 */
-int	init_forks(int nb_philo, t_forks *p_forks)
+int	init_mutexes(int nb_philo, t_mutexes *p_mutexes)
 {
 	int	ret;
 
-	ret = init_array_forks(&p_forks->array_forks, nb_philo);
+	ret = init_array_forks(&p_mutexes->array_forks, nb_philo);
 	if (ret != SUCCESS)
 		return (ret);
-	ret = init_array_forks_mutex(&p_forks->array_forks_mutex, nb_philo);
+	ret = init_array_forks_mutex(&p_mutexes->array_forks_mutex, nb_philo);
 	if (ret != SUCCESS)
 	{
-		free(p_forks->array_forks);
+		free(p_mutexes->array_forks);
 		return (ret);
 	}
-	ret = init_other_mutex(p_forks);
+	ret = init_other_mutex(p_mutexes);
 	if (ret != SUCCESS)
 	{
-		free(p_forks->array_forks);
-		clear_mutex(&p_forks->array_forks_mutex, nb_philo);
+		free(p_mutexes->array_forks);
+		clear_mutex(&p_mutexes->array_forks_mutex, nb_philo);
 		return (ret);
 	}
 	return (SUCCESS);
@@ -86,27 +86,27 @@ static int	init_array_forks_mutex(pthread_mutex_t **p_array_forks_mutex,
 	return (SUCCESS);
 }
 
-static int	init_other_mutex(t_forks *p_forks)
+static int	init_other_mutex(t_mutexes *p_mutexes)
 {
 	int	ret;
 
-	p_forks->stop_exec = FALSE;
-	ret = pthread_mutex_init(&p_forks->stop_exec_mutex, NULL);
+	p_mutexes->stop_exec = FALSE;
+	ret = pthread_mutex_init(&p_mutexes->stop_exec_mutex, NULL);
 	if (ret < 0)
 	{
 		return (FAILURE);
 	}
-	ret = pthread_mutex_init(&p_forks->printf_mutex, NULL);
+	ret = pthread_mutex_init(&p_mutexes->printf_mutex, NULL);
 	if (ret < 0)
 	{
-		pthread_mutex_destroy(&p_forks->stop_exec_mutex);
+		pthread_mutex_destroy(&p_mutexes->stop_exec_mutex);
 		return (FAILURE);
 	}
-	ret = pthread_mutex_init(&p_forks->start_mutex, NULL);
+	ret = pthread_mutex_init(&p_mutexes->start_mutex, NULL);
 	if (ret < 0)
 	{
-		pthread_mutex_destroy(&p_forks->stop_exec_mutex);
-		pthread_mutex_destroy(&p_forks->printf_mutex);
+		pthread_mutex_destroy(&p_mutexes->stop_exec_mutex);
+		pthread_mutex_destroy(&p_mutexes->printf_mutex);
 		return (FAILURE);
 	}
 	return (SUCCESS);

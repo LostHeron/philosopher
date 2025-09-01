@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:56:25 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/27 18:45:03 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 13:10:53 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include "philo.h"
 
-int	init_values(int nb_arg, char **argv, t_philo_stat *p_philo_stat);
-int	init_forks(int nb_philo, t_forks *p_forks);
-int	init_arr_philo(t_philo_stat philo_stat,
-		t_forks forks, t_philo **p_arr_philo);
+int	init_values(int nb_arg, char **argv, t_simu_stat *p_simu_stat);
+int	init_philos(t_simu_stat simu_stat, t_mutexes *p_mutexes,
+		t_philo **p_arr_philo);
+int	init_mutexes(int nb_philo, t_mutexes *p_mutexes);
+int	init_arr_philo(t_simu_stat simu_stat,
+		t_mutexes mutexes, t_philo **p_arr_philo);
 
 #endif
