@@ -18,7 +18,7 @@
 /* time to between each time we check if a philo died */
 enum e_step
 {
-	OPERATION_STEP = 5,
+	OPERATION_STEP = 100,
 };
 
 enum e_status

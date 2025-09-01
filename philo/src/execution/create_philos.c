@@ -1,0 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_philos.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 18:49:08 by jweber            #+#    #+#             */
+/*   Updated: 2025/09/01 15:10:17 by jweber           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+#include "routine.h"
+#include "utils.h"
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+static int	init_ref_time(t_philo *arr_philo, int nb_philo);
+
+int	create_philos(pthread_t *arr_th_philo, t_simu_stat *p_simu_stat,
+		t_philo *arr_philos, int *p_nb_th_launched)
+{
+	int			ret;
+
+	*p_nb_th_launched = 0;
+	pthread_mutex_lock(arr_philos->p_start_mutex);
+	while (*p_nb_th_launched < p_simu_stat->nb_philo)
+	{
+		ret = pthread_create(arr_th_philo + (*p_nb_th_launched), NULL, &routine,
+				arr_philos + (*p_nb_th_launched));
+		if (ret != 0)
+		{
+			ft_putstr_fd("pthread_create failed\n", 2);
+			ret = pthread_mutex_lock(arr_philos->p_stop_exec_mutex);
+			if (ret != 0)
+			{
+				ft_putstr_fd("could not lock stop_exec_mutex ->"
+					" big error in program behaviour\n", 2);
+				pthread_mutex_unlock(arr_philos->p_start_mutex);
+				return (ret);
+			}
+			*arr_philos->p_stop_exec = TRUE;
+			pthread_mutex_unlock(arr_philos->p_stop_exec_mutex);
+			pthread_mutex_unlock(arr_philos->p_start_mutex);
+			return (ret);
+		}
+		else
+		{
+			ret = pthread_mutex_lock(arr_philos->p_printf_mutex);
+			if (ret != 0)
+			{
+				pthread_mutex_unlock(arr_philos->p_start_mutex);
+				ft_putstr_fd("could not lock printf_mutex\n", 2);
+				return (ret);
+			}
+			printf("philo %i as been launched\n", (*p_nb_th_launched) + 1);
+			pthread_mutex_unlock(arr_philos->p_printf_mutex);
+		}
+		(*p_nb_th_launched)++;
+	}
+	init_ref_time(arr_philos, p_simu_stat->nb_philo);
+	pthread_mutex_unlock(arr_philos->p_start_mutex);
+	// this unlock causes all thread to start their execution !
+	return (SUCCESS);
+}
+
+static int	init_ref_time(t_philo *arr_philo, int nb_philo)
+{
+	int			i;
+	int			ret;
+	long long	ref_time;
+
+	ret = ft_get_time(&ref_time);
+	if (ret != 0)
+	{
+		return (ret);
+	}
+	i = 0;
+	while (i < nb_philo)
+	{
+		arr_philo[i].ref_time = ref_time;
+		i++;
+	}
+	return (SUCCESS);
+}

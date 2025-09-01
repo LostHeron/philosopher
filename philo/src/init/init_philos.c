@@ -29,7 +29,7 @@ int	init_philos(t_simu_stat simu_stat, t_mutexes *p_mutexes,
 	{
 		return (FAILURE);
 	}
-	ret = init_arr_philo(simu_stat, *p_mutexes, p_arr_philo);
+	ret = init_arr_philo(simu_stat, p_mutexes, p_arr_philo);
 	if (ret != SUCCESS)
 	{
 		return (FAILURE);

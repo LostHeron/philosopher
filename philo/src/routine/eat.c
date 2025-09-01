@@ -16,8 +16,8 @@
 #include <threads.h>
 #include <unistd.h>
 
-static int	check_finished_eating(long long eat_start_time,
-				long long *p_last_meal, int *p_done_eating, int time_to_eat);
+static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
+				int time_to_eat);
 
 /* When entering this function, the philosopher start eating.
  * it should store the start time at which the philosopher start eating
@@ -43,6 +43,7 @@ int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 		// free forks ?
 		return (ret);
 	}
+	*p_last_meal = eat_start_time;
 	ret = print_message_philo(p_philo->p_printf_mutex,
 			eat_start_time - p_philo->ref_time,
 			p_philo->philo_id, "is eating");
@@ -55,20 +56,17 @@ int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 	done_eating = FALSE;
 	while (done_eating == FALSE)
 	{
-		usleep(500);
+		usleep(OPERATION_STEP);
 		ret = check_death(p_philo, *p_last_meal, &is_dead);
-		if (ret != 0)
+		if (ret != 0 || is_dead == TRUE)
 		{
 			// what to do return ?
-		}
-		if (is_dead == TRUE)
-		{
 			*p_stop = TRUE;
 			// something else ?
 			return (ret);
 		}
-		ret = check_finished_eating(eat_start_time, p_last_meal,
-				&done_eating, p_philo->time_to_eat);
+		ret = check_finished_eating(eat_start_time, &done_eating,
+				p_philo->time_to_eat);
 		if (ret != 0)
 		{
 			// kill the philo before exiting ?
@@ -89,8 +87,8 @@ int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
  * failure (case of function failure) : return non zero
  * sucess : return (0)
 */
-static int	check_finished_eating(long long eat_start_time,
-				long long *p_last_meal, int *p_done_eating, int time_to_eat)
+static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
+				int time_to_eat)
 {
 	long long	current_time;
 	int			ret;
@@ -104,7 +102,6 @@ static int	check_finished_eating(long long eat_start_time,
 	if (current_time - eat_start_time >= time_to_eat)
 	{
 		*p_done_eating = TRUE;
-		*p_last_meal = current_time;
 	}
 	return (0);
 }

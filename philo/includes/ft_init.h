@@ -20,6 +20,6 @@ int	init_philos(t_simu_stat simu_stat, t_mutexes *p_mutexes,
 		t_philo **p_arr_philo);
 int	init_mutexes(int nb_philo, t_mutexes *p_mutexes);
 int	init_arr_philo(t_simu_stat simu_stat,
-		t_mutexes mutexes, t_philo **p_arr_philo);
+		t_mutexes *p_mutexes, t_philo **p_arr_philo);
 
 #endif

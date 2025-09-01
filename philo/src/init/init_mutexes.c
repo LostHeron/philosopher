@@ -6,12 +6,13 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 16:42:08 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/01 12:54:56 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 14:23:42 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "ft_clear.h"
+#include "utils.h"
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>

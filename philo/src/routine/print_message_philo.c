@@ -13,6 +13,7 @@
 #include "philo.h"
 #include "utils.h"
 #include <stdio.h>
+#include <unistd.h>
 
 /* This function should print a message to screen
  * if an error occur (function call fail), it should return non-null integer
@@ -26,9 +27,12 @@ int	print_message_philo(pthread_mutex_t *p_printf_mutex, long long time,
 
 	ret = pthread_mutex_lock(p_printf_mutex);
 	if (ret != 0)
+	{
+		ft_putstr_fd("pthread_mutex_lock fail to lock printf mutex\n", 2);
 		return (ret);
+	}
 	final_ret = 0;
-	if (printf("%lld philo nb_%i %s\n", time, philo_id, str) < 0)
+	if (printf("%lld\t%i\t%s\n", time, philo_id, str) < 0)
 		final_ret = FAILURE;
 	pthread_mutex_unlock(p_printf_mutex);
 	return (final_ret);

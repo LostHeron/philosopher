@@ -19,11 +19,13 @@ void	*routine(void *args);
 int		print_message_philo(pthread_mutex_t *p_printf_mutex, long long time,
 			int philo_id, char *str);
 int		try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop_exec);
-int		try_take_forks(t_philo *p_philo, int *p_can_eat);
+int		try_take_forks(t_philo *p_philo, int *p_can_eat,
+			int *p_right_fork_locked, int *p_left_fork_locked);
 int		eat(t_philo *p_philo, long long *p_last_meal, int *p_stop);
 int		try_sleep(t_philo *p_philo, long long last_meal, int *p_stop);
 int		try_think(t_philo *p_philo, int *p_stop);
 int		check_death(t_philo *p_philo, long long last_meal, int *p_has_died);
-int		kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec);
+int		try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
+			t_philo *p_philo);
 
 #endif

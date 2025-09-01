@@ -20,7 +20,7 @@ int	try_think(t_philo *p_philo, int *p_stop)
 	long long	think_start_time;
 	int			ret;
 
-	// should check no philo as died here ? Necessary ?
+	// should check no philo as died here ? Necessary ? I wanna say no !
 	ret = ft_get_time(&think_start_time);
 	if (ret != 0)
 	{

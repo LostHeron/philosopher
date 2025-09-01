@@ -14,6 +14,7 @@
 #include "routine.h"
 #include "utils.h"
 #include <pthread.h>
+#include <stdio.h>
 #include <unistd.h>
 
 static int	free_forks(t_philo *p_philo);
@@ -39,46 +40,31 @@ int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 	int			ret;
 	int			can_eat;
 	int			is_dead;
+	int			right_fork_locked;
+	int			left_fork_locked;
 
 	can_eat = FALSE;
+	right_fork_locked = FALSE;
+	left_fork_locked = FALSE;
 	while (can_eat != TRUE)
 	{
 		ret = check_death(p_philo, *p_last_meal, &is_dead);
-		if (ret != 0)
-		{
-			// what to do return ?
-			return (ret);
-		}
-		if (is_dead == TRUE)
+		if (ret != 0 || is_dead == TRUE)
 		{
 			*p_stop = TRUE;
-			// something else ?
 			return (ret);
 		}
-		ret = try_take_forks(p_philo, &can_eat);
+		ret = try_take_forks(p_philo, &can_eat,
+				&right_fork_locked, &left_fork_locked);
 		if (ret != 0)
 		{
-			// what more to do too here ?
-			// say this thread has died to other thread ?
 			return (ret);
 		}
-		long long current_time;
-		ft_get_time(&current_time);
-		if (can_eat == TRUE)
-			print_message_philo(p_philo->p_printf_mutex,
-				current_time - p_philo->ref_time, p_philo->philo_id, 
-				"##### philosopher can eat !\n");
-		else
-			print_message_philo(p_philo->p_printf_mutex,
-				current_time - p_philo->ref_time, p_philo->philo_id, 
-				"##### philosopher can NOT eat !\n");
-		usleep(500);
+		usleep(OPERATION_STEP);
 	}
 	ret = eat(p_philo, p_last_meal, p_stop);
 	if (ret != 0 || *p_stop == TRUE)
 	{
-		// what else to do in case of failure ?
-		// kill philo ? or has been done inside eat ?
 		free_forks(p_philo);
 		return (ret);
 	}
@@ -105,6 +91,11 @@ static int	free_forks(t_philo *p_philo)
 	}
 	*p_philo->p_right_fork = AVAILABLE;
 	pthread_mutex_unlock(p_philo->p_right_fork_mutex);
+	long long current_time;
+	ft_get_time(&current_time);
+	print_message_philo(p_philo->p_printf_mutex,
+		current_time - p_philo->ref_time,
+		p_philo->philo_id, "has drop a fork");
 	ret = pthread_mutex_lock(p_philo->p_left_fork_mutex);
 	if (ret != 0)
 	{

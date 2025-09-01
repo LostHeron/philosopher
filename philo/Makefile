@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/09/01 13:03:43 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/01 15:11:00 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,9 @@ UTILS_FILES := ft_atoi_safe.c \
 			   ft_strlen.c \
 
 EXECUTION_DIR := src/execution/
-EXECUTION_FILES := start_philo.c \
-				   launch_philo.c \
+EXECUTION_FILES := start_philos.c \
+				   create_philos.c \
+				   join_philos.c \
 
 ROUTINE_DIR := src/routine/
 ROUTINE_FILES := routine.c \

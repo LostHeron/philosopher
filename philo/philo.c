@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:41:26 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/01 13:11:21 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 15:11:23 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	{
 		return (ret);
 	}
-	ret = start_philo(simu_stat, &arr_philo);
+	ret = start_philos(simu_stat, &arr_philo);
 	clear_all(&mutexes, &arr_philo, simu_stat.nb_philo);
 	return (ret);
 }

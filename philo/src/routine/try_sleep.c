@@ -44,7 +44,7 @@ int	try_sleep(t_philo *p_philo, long long last_meal, int *p_stop)
 	done_sleeping = FALSE;
 	while (done_sleeping == FALSE)
 	{
-		usleep(500);
+		usleep(OPERATION_STEP);
 		ret = check_death(p_philo, last_meal, &is_dead);
 		if (ret != 0)
 		{

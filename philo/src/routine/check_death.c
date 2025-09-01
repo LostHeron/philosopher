@@ -13,6 +13,7 @@
 #include "philo.h"
 #include "routine.h"
 #include "utils.h"
+#include <pthread.h>
 
 static int	check_other_death(t_philo *p_philo, int *p_other_has_died);
 static int	check_own_death(t_philo *p_philo, long long last_meal,
@@ -30,7 +31,7 @@ int	check_death(t_philo *p_philo, long long last_meal, int *p_is_dead)
 	int	ret;
 
 	ret = check_other_death(p_philo, p_is_dead);
-	if (ret != 0)
+	if (ret != 0 || *p_is_dead == TRUE)
 	{
 		// some else ?
 		return (ret);
@@ -42,7 +43,6 @@ int	check_death(t_philo *p_philo, long long last_meal, int *p_is_dead)
 		return (ret);
 	}
 	return (SUCCESS);
-
 }
 
 /* This function should check if a philosopher has died
@@ -75,8 +75,7 @@ static int	check_other_death(t_philo *p_philo, int *p_other_has_died)
  *	-> kill the philosopher and set *p_has_died to true;
  *	else set *p_has_died to false
 */
-static int	check_own_death(t_philo *p_philo, long long last_meal,
-				int *p_has_died)
+static int	check_own_death(t_philo *p_philo, long long last_meal, int *p_has_died)
 {
 	int			ret;
 	long long	current_time;
@@ -91,7 +90,8 @@ static int	check_own_death(t_philo *p_philo, long long last_meal,
 	if (current_time - last_meal > p_philo->time_to_die)
 	{
 		*p_has_died = TRUE;
-		ret = kill_philo(p_philo->p_stop_exec_mutex, p_philo->p_stop_exec);
+		ret = try_kill_philo(p_philo->p_stop_exec_mutex,
+				p_philo->p_stop_exec, p_philo);
 		if (ret != 0)
 		{
 			// what to do ? it means it could not lock mutex
