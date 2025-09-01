@@ -74,20 +74,17 @@ void	*routine(void *args)
 				// what to do ?
 			}
 			*/
-			ft_putstr_fd("we exit routineafter try eat!\n", 2);
 			return (NULL);
 		}
 		nb_time_eaten++;
 		ret = try_sleep(p_philo, last_meal, &stop);
 		if (ret != 0 || stop == TRUE)
 		{
-			ft_putstr_fd("we exit routine after try sleep!\n", 2);
 			return (NULL);//
 		}
 		ret = try_think(p_philo, &stop);
 		if (ret != 0 || stop == TRUE)
 		{
-			ft_putstr_fd("we exit routine after try think!\n", 2);
 			return (NULL);//
 		}
 	}
