@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_mutex.c                                      :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 17:17:49 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 11:27:47 by jweber           ###   ########.fr       */
+/*   Created: 2025/08/29 11:47:55 by jweber            #+#    #+#             */
+/*   Updated: 2025/08/29 12:11:39 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
+#ifndef WHITE_SPACE
+# define WHITE_SPACE " \f\n\r\t\v"
+#endif
+#include "utils.h"
 #include <stdlib.h>
 
-/* This function take an array of nb_to_clear mutexes,
- * it destroys each mutexes one by one then free the array of mutexes !
+/* checks for white-space characters.  In the "C" and "POSIX" locales, 
+ * these are: 
+ * - space (' '), 
+ * - form-feed ('\f'), 
+ * - newline ('\n'), 
+ * - carriage return ('\r'), 
+ * - horizontal tab ('\t'),  
+ * - vertical tab ('\v').
 */
-void	clear_mutex(pthread_mutex_t **p_array_forks_mutex, int nb_to_clear)
+int	ft_isspace(char c)
 {
-	int	i;
-
-	i = 0;
-	while (i < nb_to_clear)
-	{
-		pthread_mutex_destroy((*p_array_forks_mutex) + i);
-		i++;
-	}
-	free(*p_array_forks_mutex);
-	*p_array_forks_mutex = NULL;
-	return ;
+	return (ft_strchr(WHITE_SPACE, c) != NULL);
 }

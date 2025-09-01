@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/08/27 18:22:16 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/01 12:14:44 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,13 @@ CFLAGS := -Wall -Wextra -Werror
 INCLUDES := -I includes/
 
 UTILS_DIR := src/utils/
-UTILS_FILES := ft_atoi.c \
+UTILS_FILES := ft_atoi_safe.c \
+			   ft_isspace.c \
+			   ft_strchr.c \
 			   ft_get_time.c \
+			   print_error_atoi_safe.c \
+			   ft_putstr_fd.c \
+			   ft_strlen.c \
 
 EXECUTION_DIR := src/execution/
 EXECUTION_FILES := start_philo.c \

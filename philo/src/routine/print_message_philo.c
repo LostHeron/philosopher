@@ -29,7 +29,7 @@ int	print_message_philo(pthread_mutex_t *p_printf_mutex, long long time,
 		return (ret);
 	final_ret = 0;
 	if (printf("%lld philo nb_%i %s\n", time, philo_id, str) < 0)
-		final_ret = ERROR_WRITE;
+		final_ret = FAILURE;
 	pthread_mutex_unlock(p_printf_mutex);
 	return (final_ret);
 }

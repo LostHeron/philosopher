@@ -6,14 +6,30 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 16:27:45 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 14:17:26 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 12:15:29 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-int	ft_atoi(const char *nptr);
-int	ft_get_time(long long *p_time);
+# include <stdlib.h>
+
+enum	e_atoi_safe
+{
+	ATOI_SAFE_OVERFLOW = 1,
+	ATOI_SAFE_UNDERFLOW,
+	ATOI_SAFE_WRONG_INPUT,
+	ATOI_SAFE_TOO_LARGE_INPUT,
+};
+
+int		ft_atoi_safe(const char *str, int *p_value);
+
+int		print_error_atoi_safe(int err);
+int		ft_putstr_fd(char *s, int fd);
+size_t	ft_strlen(const char *s);
+int		ft_isspace(char c);
+char	*ft_strchr(const char *s, int c);
+int		ft_get_time(long long *p_time);
 
 #endif

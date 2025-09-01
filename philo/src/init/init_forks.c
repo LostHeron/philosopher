@@ -41,7 +41,7 @@ int	init_forks(int nb_philo, t_forks *p_forks)
 	if (ret != SUCCESS)
 	{
 		free(p_forks->array_forks);
-		clear_mutex(p_forks->array_forks_mutex, nb_philo);
+		clear_mutex(&p_forks->array_forks_mutex, nb_philo);
 		return (ret);
 	}
 	return (SUCCESS);
@@ -78,8 +78,7 @@ static int	init_array_forks_mutex(pthread_mutex_t **p_array_forks_mutex,
 		ret = pthread_mutex_init((*p_array_forks_mutex) + i, NULL);
 		if (ret != 0)
 		{
-			clear_mutex(*p_array_forks_mutex, i);
-			free(*p_array_forks_mutex);
+			clear_mutex(p_array_forks_mutex, i);
 			return (FAILURE);
 		}
 		i++;

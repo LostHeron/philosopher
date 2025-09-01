@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_clear.h                                         :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 17:20:29 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/20 17:21:08 by jweber           ###   ########.fr       */
+/*   Created: 2024/11/05 15:47:24 by jweber            #+#    #+#             */
+/*   Updated: 2025/09/01 12:14:58 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_CLEAR_H
-# define FT_CLEAR_H
+#include "utils.h"
+#include <unistd.h>
 
-# include <pthread.h>
-
-void	clear_mutex(pthread_mutex_t **p_array_forks_mutex, int nb_to_clear);
-
-#endif
+int	ft_putstr_fd(char *s, int fd)
+{
+	return (write(fd, s, ft_strlen(s)));
+}

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:54:49 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/20 17:03:47 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/01 12:18:29 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,24 @@ static int	last_check(int nb_arg, t_philo_stat *p_philo_stat);
 
 int	init_values(int nb_arg, char **argv, t_philo_stat *p_philo_stat)
 {
-	p_philo_stat->nb_philo = ft_atoi(argv[0]);
-	p_philo_stat->time_to_die = ft_atoi(argv[1]);
-	p_philo_stat->time_to_eat = ft_atoi(argv[2]);
-	p_philo_stat->time_to_sleep = ft_atoi(argv[3]);
+	int	ret;
+
+	ret = ft_atoi_safe(argv[0], &p_philo_stat->nb_philo);
+	if (ret != 0)
+		return (print_error_atoi_safe(ret));
+	ret = ft_atoi_safe(argv[1], &p_philo_stat->time_to_die);
+	if (ret != 0)
+		return (print_error_atoi_safe(ret));
+	ret = ft_atoi_safe(argv[2], &p_philo_stat->time_to_eat);
+	if (ret != 0)
+		return (print_error_atoi_safe(ret));
+	ret = ft_atoi_safe(argv[3], &p_philo_stat->time_to_sleep);
 	if (nb_arg == 5)
-		p_philo_stat->nb_time_each_one_eats = ft_atoi(argv[4]);
+	{
+		ret = ft_atoi_safe(argv[4], &p_philo_stat->nb_time_each_one_eats);
+		if (ret != 0)
+			return (print_error_atoi_safe(ret));
+	}
 	else
 		p_philo_stat->nb_time_each_one_eats = -1;
 	return (check_values(nb_arg, p_philo_stat));

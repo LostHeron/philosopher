@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_mutex.c                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 17:17:49 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/21 11:27:47 by jweber           ###   ########.fr       */
+/*   Created: 2024/11/05 13:24:25 by jweber            #+#    #+#             */
+/*   Updated: 2025/09/01 12:06:13 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
 #include <stdlib.h>
 
-/* This function take an array of nb_to_clear mutexes,
- * it destroys each mutexes one by one then free the array of mutexes !
-*/
-void	clear_mutex(pthread_mutex_t **p_array_forks_mutex, int nb_to_clear)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (i < nb_to_clear)
+	while (s[i])
 	{
-		pthread_mutex_destroy((*p_array_forks_mutex) + i);
 		i++;
 	}
-	free(*p_array_forks_mutex);
-	*p_array_forks_mutex = NULL;
-	return ;
+	return (i);
 }

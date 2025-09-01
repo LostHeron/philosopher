@@ -14,7 +14,6 @@
 #include "ft_init.h"
 #include "execution.h"
 #include "ft_clear.h"
-#include "utils.h"
 #include <pthread.h>
 #include <stdlib.h>
 
@@ -36,7 +35,7 @@ int	start_philo(t_philo_stat philo_stat)
 		return (FAILURE);
 	}
 	ret = launch_philo(&philo_stat, arr_philo);
-	clear_mutex(&forks, philo_stat.nb_philo);
+	clear_mutex(&forks.array_forks_mutex, philo_stat.nb_philo);
 	free(arr_philo);
 	pthread_mutex_destroy(&forks.stop_exec_mutex);
 	pthread_mutex_destroy(&forks.printf_mutex);
