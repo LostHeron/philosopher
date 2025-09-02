@@ -14,7 +14,6 @@
 #include "routine.h"
 #include "utils.h"
 #include <pthread.h>
-#include <stdio.h>
 #include <unistd.h>
 
 static int	free_forks(t_philo *p_philo);
@@ -62,6 +61,12 @@ int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 		}
 		usleep(OPERATION_STEP);
 	}
+	ret = check_death(p_philo, *p_last_meal, &is_dead);
+	if (ret != 0 || is_dead == TRUE)
+	{
+		*p_stop = TRUE;
+		return (ret);
+	}
 	ret = eat(p_philo, p_last_meal, p_stop);
 	if (ret != 0 || *p_stop == TRUE)
 	{
@@ -82,7 +87,8 @@ int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 */
 static int	free_forks(t_philo *p_philo)
 {
-	int	ret;
+	//long long	current_time;
+	int			ret;
 
 	ret = pthread_mutex_lock(p_philo->p_right_fork_mutex);
 	if (ret != 0)
@@ -91,11 +97,12 @@ static int	free_forks(t_philo *p_philo)
 	}
 	*p_philo->p_right_fork = AVAILABLE;
 	pthread_mutex_unlock(p_philo->p_right_fork_mutex);
-	long long current_time;
+	/*
 	ft_get_time(&current_time);
 	print_message_philo(p_philo->p_printf_mutex,
 		current_time - p_philo->ref_time,
 		p_philo->philo_id, "has drop a fork");
+		*/
 	ret = pthread_mutex_lock(p_philo->p_left_fork_mutex);
 	if (ret != 0)
 	{
@@ -103,5 +110,11 @@ static int	free_forks(t_philo *p_philo)
 	}
 	*p_philo->p_left_fork = AVAILABLE;
 	pthread_mutex_unlock(p_philo->p_left_fork_mutex);
+	/*
+	ft_get_time(&current_time);
+	print_message_philo(p_philo->p_printf_mutex,
+		current_time - p_philo->ref_time,
+		p_philo->philo_id, "has drop a fork");
+	*/
 	return (SUCCESS);
 }

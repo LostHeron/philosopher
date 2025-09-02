@@ -55,7 +55,7 @@ int	create_philos(pthread_t *arr_th_philo, t_simu_stat *p_simu_stat,
 				ft_putstr_fd("could not lock printf_mutex\n", 2);
 				return (ret);
 			}
-			printf("philo %i as been launched\n", (*p_nb_th_launched) + 1);
+			//printf("philo %i as been launched\n", (*p_nb_th_launched) + 1);
 			pthread_mutex_unlock(arr_philos->p_printf_mutex);
 		}
 		(*p_nb_th_launched)++;

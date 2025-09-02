@@ -69,8 +69,11 @@ int	try_take_forks(t_philo *p_philo, int *p_can_eat,
 			print_message_philo(p_philo->p_printf_mutex,
 				current_time - p_philo->ref_time, p_philo->philo_id,
 				"has taken a fork");
-			*p_can_eat = TRUE;
 		}
+	}
+	if (*p_left_fork_locked == TRUE && *p_right_fork_locked == TRUE)
+	{
+		*p_can_eat = TRUE;
 	}
 	return (SUCCESS);
 }
