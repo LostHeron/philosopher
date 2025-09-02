@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:04 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/02 19:51:15 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/02 19:54:46 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*routine(void *args)
 
 	p_philo = args;
 	ret = routine_init(p_philo, &last_meal, &stop, &nb_time_eaten);
-	if (ret != 0)
+	if (ret != SUCCESS)
 	{
 		set_stop_to_true(p_philo);
 		return (NULL);
@@ -56,7 +56,7 @@ void	*routine(void *args)
 	{
 		ret = routine_loop(p_philo, &last_meal, &stop, &nb_time_eaten);
 	}
-	if (ret != 0)
+	if (ret != SUCCESS)
 	{
 		set_stop_to_true(p_philo);
 	}
@@ -92,7 +92,7 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 	if (ret != 0 || *p_stop == TRUE)
 		return (ret);
 	ret = try_think(p_philo, p_stop);
-	if (ret != 0 || *p_stop == TRUE)
+	if (ret != SUCCESS || *p_stop == TRUE)
 		return (ret);
 	if (p_philo->philo_id % 2 == 0)
 		if (usleep(p_philo->time_to_eat * 1000 / 2) < 0)
