@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:47:39 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/27 18:38:53 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/02 12:34:38 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 			return (ret);
 		}
 		usleep(OPERATION_STEP);
-	}
-	ret = check_death(p_philo, *p_last_meal, &is_dead);
-	if (ret != 0 || is_dead == TRUE)
-	{
-		*p_stop = TRUE;
-		return (ret);
 	}
 	ret = eat(p_philo, p_last_meal, p_stop);
 	if (ret != 0 || *p_stop == TRUE)

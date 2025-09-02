@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/09/01 15:11:00 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/02 17:26:56 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ UTILS_FILES := ft_atoi_safe.c \
 			   ft_get_time.c \
 			   print_error_atoi_safe.c \
 			   ft_putstr_fd.c \
+			   ft_strcat_nb.c \
+			   ft_strcat_str.c \
 			   ft_strlen.c \
 
 EXECUTION_DIR := src/execution/
@@ -38,6 +40,7 @@ ROUTINE_FILES := routine.c \
 				 try_sleep.c \
 				 try_think.c \
 				 print_message_philo.c \
+				 print_message_philo_no_check.c \
 				 kill_philo.c \
 				 check_death.c \
 

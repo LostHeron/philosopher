@@ -27,9 +27,7 @@ int	join_philos(pthread_t *arr_th_philo, pthread_mutex_t *p_printf_mutex,
 		ret = pthread_join(arr_th_philo[i], NULL);
 		if (ret != 0)
 		{
-			pthread_mutex_lock(p_printf_mutex);
 			ft_putstr_fd("pthread_join failed\n", 2);
-			pthread_mutex_unlock(p_printf_mutex);
 		}
 		else
 		{

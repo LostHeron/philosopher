@@ -31,5 +31,7 @@ size_t	ft_strlen(const char *s);
 int		ft_isspace(char c);
 char	*ft_strchr(const char *s, int c);
 int		ft_get_time(long long *p_time);
+void	ft_strcat_nb(char *buf, size_t *p_buf_len, long long nb);
+void	ft_strcat_str(char *buf, size_t *p_buf_len, const char *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:51:17 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/01 13:04:28 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/02 17:38:07 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /* time to between each time we check if a philo died */
 enum e_step
 {
-	OPERATION_STEP = 100,
+	OPERATION_STEP = 1000,
 };
 
 enum e_status
@@ -58,8 +58,12 @@ typedef struct s_mutexes
 	pthread_mutex_t	start_mutex;
 }				t_mutexes;
 
+# define SIZE_BUF_PRINT 256
+
 typedef struct s_philo
 {
+	char			buf_msg[SIZE_BUF_PRINT];
+	size_t			buf_msg_len;
 	int				philo_id;
 	int				nb_time_to_eat;
 	long long		ref_time;

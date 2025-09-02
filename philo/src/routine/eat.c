@@ -44,9 +44,9 @@ int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 		return (ret);
 	}
 	*p_last_meal = eat_start_time;
-	ret = print_message_philo(p_philo->p_printf_mutex,
+	ret = print_message_philo(p_philo,
 			eat_start_time - p_philo->ref_time,
-			p_philo->philo_id, "is eating");
+			"is eating");
 	if (ret != 0)
 	{
 		// also say other thread this thread has died

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 10:46:07 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/27 14:11:43 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/02 17:26:41 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
 			// do stuff
 			return (ret);
 		}
-		print_message_philo(p_philo->p_printf_mutex,
+		print_message_philo_no_check(p_philo,
 			current_time - p_philo->ref_time,
-			p_philo->philo_id, "died");
+			"died");
 	}
 	return (SUCCESS);
 }
