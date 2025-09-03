@@ -16,6 +16,8 @@
 #include <threads.h>
 #include <unistd.h>
 
+static int	eating_loop(t_philo *p_philo, long long eat_start_time,
+				int *p_stop, long long last_meal);
 static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
 				int time_to_eat);
 
@@ -23,70 +25,62 @@ static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
  * it should store the start time at which the philosopher start eating
  * this time will be used to compare if philo as finished eating !
  *	-> Then print a message anouncing the philosopher is eating !
- *	-> Then is should eat usleep after usleep, and check after each usleep:
- *		-> if any other thread has died
- *		-> if this thread just died
- *			if one of the two previous statement is true, stop execution
- *			by setting *p_stop to TRUE;
+ *	-> Then is should check usleep after usleep:
+ *		-> if any philosopher died !
+ *		-> then if it finished eaten !
+ *	if an error occured or a philosopher died, it should tell calling
+ *	function to stop thread execution by returning a non null integer 
+ *	or by setting *p_stop to TRUE respectively
 */
 int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 {
 	long long	eat_start_time;
-	int			done_eating;
-	int			is_dead;
 	int			ret;
 
 	ret = ft_get_time(&eat_start_time);
-	if (ret != 0)
-	{
-		// also say other thread this thread has died
-		// free forks ?
+	if (ret != SUCCESS)
 		return (ret);
-	}
 	*p_last_meal = eat_start_time;
 	ret = print_message_philo(p_philo,
 			eat_start_time - p_philo->ref_time,
 			"is eating");
-	if (ret != 0)
-	{
-		// also say other thread this thread has died
-		// free forks ?
+	if (ret != SUCCESS)
 		return (ret);
-	}
+	ret = eating_loop(p_philo, eat_start_time, p_stop, *p_last_meal);
+	return (ret);
+}
+
+/* This function will wait usleep after usleep that the philosopher 
+ * have finished eating
+ * after each usleep, it : 
+ *	-> check if any philosopher died
+ *	-> then check if the philosopher finised eating !
+*/
+static int	eating_loop(t_philo *p_philo, long long eat_start_time,
+				int *p_stop, long long last_meal)
+{
+	int	ret;
+	int	done_eating;
+	int	is_dead;
+
+	ret = SUCCESS;
 	done_eating = FALSE;
-	while (done_eating == FALSE)
+	while (ret == SUCCESS && done_eating == FALSE)
 	{
-		usleep(OPERATION_STEP);
-		ret = check_death(p_philo, *p_last_meal, &is_dead);
+		if (usleep(OPERATION_STEP) < 0)
+			return (usleep_failure());
+		ret = check_death(p_philo, last_meal, &is_dead);
 		if (ret != 0 || is_dead == TRUE)
 		{
-			// what to do return ?
 			*p_stop = TRUE;
-			// something else ?
 			return (ret);
 		}
 		ret = check_finished_eating(eat_start_time, &done_eating,
 				p_philo->time_to_eat);
-		if (ret != 0)
-		{
-			// kill the philo before exiting ?
-			// in case of error ?
-			return (ret);
-		}
 	}
-	return (SUCCESS);
+	return (ret);
 }
 
-/* This should check if current philo as finished eating
- * by comparing current_time (retrieve in the function) - eat_start_time
- * with the time it takes to eat ! 
- * if thread as finished eating :
- *		set *p_done_eating to TRUE,
- *		set *p_last_meal to current_time,
- * else do nothing !
- * failure (case of function failure) : return non zero
- * sucess : return (0)
-*/
 static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
 				int time_to_eat)
 {
@@ -96,7 +90,6 @@ static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
 	ret = ft_get_time(&current_time);
 	if (ret != 0)
 	{
-		// do something else ? i'd say no do it in upper function !
 		return (ret);
 	}
 	if (current_time - eat_start_time >= time_to_eat)

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:19:48 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/02 12:17:16 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/03 11:30:51 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	try_sleep(t_philo *p_philo, long long last_meal, int *p_stop)
 	ret = ft_get_time(&sleep_start_time);
 	if (ret != 0)
 	{
-		// do something else ?
 		*p_stop = TRUE;
 		return (ret);
 	}

@@ -15,59 +15,29 @@
 #include "utils.h"
 #include <pthread.h>
 
+static int	try_lock_fork_print(pthread_mutex_t *p_fork_mutex, int *p_fork,
+				int *p_fork_locked, t_philo *p_philo);
 static int	try_lock_fork(pthread_mutex_t *p_fork_mutex, int *p_fork,
 				int *p_fork_lock);
-//static int	free_fork(pthread_mutex_t *p_fork_mutex, int *p_fork);
 
 int	try_take_forks(t_philo *p_philo, int *p_can_eat,
 		int *p_right_fork_locked, int *p_left_fork_locked)
 {
 	int			ret;
-	long long	current_time;
 
 	if (*p_right_fork_locked == FALSE)
 	{
-		ret = try_lock_fork(p_philo->p_right_fork_mutex, p_philo->p_right_fork,
-				p_right_fork_locked);
-		if (ret != 0)
-		{
-			ft_putstr_fd("error while trying to take right fork\n", 2);
-			// something else ?
+		ret = try_lock_fork_print(p_philo->p_right_fork_mutex,
+				p_philo->p_right_fork, p_right_fork_locked, p_philo);
+		if (ret != SUCCESS)
 			return (ret);
-		}
-		if (*p_right_fork_locked == TRUE)
-		{
-			ret = ft_get_time(&current_time);
-			if (ret != 0)
-			{
-				// what else to do ?
-				return (ret);
-			}
-			print_message_philo(p_philo,
-				current_time - p_philo->ref_time, "has taken a fork");
-		}
 	}
 	if (*p_left_fork_locked == FALSE)
 	{
-		ret = try_lock_fork(p_philo->p_left_fork_mutex, p_philo->p_left_fork,
-				p_left_fork_locked);
-		if (ret != 0)
-		{
-			ft_putstr_fd("error while trying to take left fork\n", 2);
-			// something else ?
+		ret = try_lock_fork_print(p_philo->p_left_fork_mutex,
+				p_philo->p_left_fork, p_left_fork_locked, p_philo);
+		if (ret != SUCCESS)
 			return (ret);
-		}
-		if (*p_left_fork_locked == TRUE)
-		{
-			ret = ft_get_time(&current_time);
-			if (ret != 0)
-			{
-				// what else to do ?
-				return (ret);
-			}
-			print_message_philo(p_philo,
-				current_time - p_philo->ref_time, "has taken a fork");
-		}
 	}
 	if (*p_left_fork_locked == TRUE && *p_right_fork_locked == TRUE)
 	{
@@ -76,86 +46,34 @@ int	try_take_forks(t_philo *p_philo, int *p_can_eat,
 	return (SUCCESS);
 }
 
-
-/* old try take fork with dropping forks
-int	try_take_forks(t_philo *p_philo, int *p_can_eat)
+static int	try_lock_fork_print(pthread_mutex_t *p_fork_mutex, int *p_fork,
+				int *p_fork_locked, t_philo *p_philo)
 {
 	int			ret;
-	int			right_fork_locked;
-	int			left_fork_locked;
 	long long	current_time;
 
-	*p_can_eat = FALSE;
-	right_fork_locked = FALSE;
-	left_fork_locked = FALSE;
-	ret = try_lock_fork(p_philo->p_right_fork_mutex, p_philo->p_right_fork,
-			&right_fork_locked);
+	ret = try_lock_fork(p_fork_mutex, p_fork,
+			p_fork_locked);
 	if (ret != 0)
 	{
-		// something else ?
+		ft_putstr_fd("error while trying to take right fork\n", 2);
 		return (ret);
 	}
-	if (right_fork_locked == TRUE)
+	if (*p_fork_locked == TRUE)
 	{
 		ret = ft_get_time(&current_time);
 		if (ret != 0)
 		{
-			// what else to do ?
 			return (ret);
 		}
-		print_message_philo(p_philo->p_printf_mutex,
-			current_time - p_philo->ref_time, p_philo->philo_id,
-			"has taken a fork");
-		ret = try_lock_fork(p_philo->p_left_fork_mutex, p_philo->p_left_fork,
-				&left_fork_locked);
-		if (ret != 0)
-		{
-			return (ret);
-		}
-		if (left_fork_locked == TRUE)
-		{
-			ret = ft_get_time(&current_time);
-			if (ret != 0)
-			{
-				// what else to do ?
-				return (ret);
-			}
-			print_message_philo(p_philo->p_printf_mutex,
-				current_time - p_philo->ref_time, p_philo->philo_id,
-				"has taken a fork");
-			*p_can_eat = TRUE;
-		}
-		else
-		{
-			print_message_philo(p_philo->p_printf_mutex,
-				current_time - p_philo->ref_time, p_philo->philo_id,
-				"has drop a fork");
-			ret = free_fork(p_philo->p_right_fork_mutex, p_philo->p_right_fork);
-			if (ret != 0)
-			{
-				// what else to do ?
-				return (ret);
-			}
-		}
-	}
-	else
-	{
-		ret = ft_get_time(&current_time);
-		if (ret != 0)
-		{
-			// what else to do ?
-			return (ret);
-		}
-		print_message_philo(p_philo->p_printf_mutex,
-			current_time - p_philo->ref_time, p_philo->philo_id,
-			"Could not take right fork\n");
+		print_message_philo(p_philo,
+			current_time - p_philo->ref_time, "has taken a fork");
 	}
 	return (SUCCESS);
 }
-*/
 
 static int	try_lock_fork(pthread_mutex_t *p_fork_mutex, int *p_fork,
-				int *p_fork_lock)
+				int *p_fork_locked)
 {
 	int	ret;
 
@@ -165,25 +83,9 @@ static int	try_lock_fork(pthread_mutex_t *p_fork_mutex, int *p_fork,
 	if (*p_fork == AVAILABLE)
 	{
 		*p_fork = UNAVAILABLE;
-		*p_fork_lock = TRUE;
+		*p_fork_locked = TRUE;
 	}
 	pthread_mutex_unlock(p_fork_mutex);
 	return (SUCCESS);
 }
 
-/*
-static int	free_fork(pthread_mutex_t *p_fork_mutex, int *p_fork)
-{
-	int	ret;
-
-	ret = pthread_mutex_lock(p_fork_mutex);
-	if (ret != 0)
-	{
-		// what to do in this case ?
-		return (ret);
-	}
-	*p_fork = AVAILABLE;
-	pthread_mutex_unlock(p_fork_mutex);
-	return (SUCCESS);
-}
-*/

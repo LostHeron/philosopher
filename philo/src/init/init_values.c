@@ -31,6 +31,8 @@ int	init_values(int nb_arg, char **argv, t_simu_stat *p_simu_stat)
 	if (ret != 0)
 		return (print_error_atoi_safe(ret));
 	ret = ft_atoi_safe(argv[3], &p_simu_stat->time_to_sleep);
+	if (ret != 0)
+		return (print_error_atoi_safe(ret));
 	if (nb_arg == 5)
 	{
 		ret = ft_atoi_safe(argv[4], &p_simu_stat->nb_time_each_one_eats);
