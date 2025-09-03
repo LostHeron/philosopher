@@ -24,9 +24,9 @@
 int	try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
 		t_philo *p_philo)
 {
-	int	ret;
-	int	has_been_killed;
-	long long current_time;
+	int			ret;
+	int			has_been_killed;
+	long long	current_time;
 
 	ret = pthread_mutex_lock(p_stop_exec_mutex);
 	if (ret != 0)
@@ -43,10 +43,7 @@ int	try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
 	{
 		ret = ft_get_time(&current_time);
 		if (ret != 0)
-		{
-			// do stuff
 			return (ret);
-		}
 		print_message_philo_no_check(p_philo,
 			current_time - p_philo->ref_time,
 			"died");
