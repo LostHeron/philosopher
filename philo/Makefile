@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/09/02 17:26:56 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/03 11:24:36 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ UTILS_FILES := ft_atoi_safe.c \
 			   ft_strcat_nb.c \
 			   ft_strcat_str.c \
 			   ft_strlen.c \
+			   usleep_failure.c \
 
 EXECUTION_DIR := src/execution/
 EXECUTION_FILES := start_philos.c \
