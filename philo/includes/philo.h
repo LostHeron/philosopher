@@ -41,7 +41,7 @@ enum e_available
 
 typedef struct s_simu_stat
 {
-	int	nb_philo;
+	int	nb_philos;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
@@ -76,6 +76,7 @@ typedef struct s_philo
 	pthread_mutex_t	*p_stop_exec_mutex;
 	pthread_mutex_t	*p_nb_finished_eaten_mutex;
 	int				*p_nb_finished_eaten;
+	int				nb_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;

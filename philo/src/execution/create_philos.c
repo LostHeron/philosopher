@@ -27,7 +27,7 @@ int	create_philos(pthread_t *arr_th_philo, t_simu_stat *p_simu_stat,
 
 	*p_nb_th_launched = 0;
 	pthread_mutex_lock(arr_philos->p_start_mutex);
-	while (*p_nb_th_launched < p_simu_stat->nb_philo)
+	while (*p_nb_th_launched < p_simu_stat->nb_philos)
 	{
 		ret = pthread_create(arr_th_philo + (*p_nb_th_launched), NULL, &routine,
 				arr_philos + (*p_nb_th_launched));
@@ -36,7 +36,7 @@ int	create_philos(pthread_t *arr_th_philo, t_simu_stat *p_simu_stat,
 					arr_philos->p_stop_exec, arr_philos->p_start_mutex));
 		(*p_nb_th_launched)++;
 	}
-	ret = init_ref_time(arr_philos, p_simu_stat->nb_philo);
+	ret = init_ref_time(arr_philos, p_simu_stat->nb_philos);
 	if (ret != SUCCESS)
 	{
 		return (ret);

@@ -40,6 +40,6 @@ int	main(int argc, char **argv)
 		return (ret);
 	}
 	ret = start_simulation(simu_stat, &arr_philo);
-	clear_all(&mutexes, &arr_philo, simu_stat.nb_philo);
+	clear_all(&mutexes, &arr_philo, simu_stat.nb_philos);
 	return (ret);
 }

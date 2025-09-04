@@ -20,6 +20,8 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 				int *p_stop, int *p_nb_time_eaten);
 static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 				int *p_stop, int *p_nb_time_eaten);
+static int	check_all_philos_finish_eaten(t_philo *p_philo,
+				int *p_nb_time_eaten);
 static void	set_stop_to_true(t_philo *p_philo);
 
 /* This is the main starting point for each thread !
@@ -50,8 +52,7 @@ void	*routine(void *args)
 		set_stop_to_true(p_philo);
 		return (NULL);
 	}
-	while (ret == SUCCESS && stop == FALSE && (p_philo->nb_time_to_eat < 0
-			|| nb_time_eaten < p_philo->nb_time_to_eat))
+	while (ret == SUCCESS && stop == FALSE)
 	{
 		ret = routine_loop(p_philo, &last_meal, &stop, &nb_time_eaten);
 	}
@@ -117,6 +118,9 @@ static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 		return (ret);
 	}
 	(*p_nb_time_eaten)++;
+	ret = check_all_philos_finish_eaten(p_philo, p_nb_time_eaten);
+	if (ret != SUCCESS)
+		return (ret);
 	ret = try_sleep(p_philo, *p_last_meal, p_stop);
 	if (ret != 0 || *p_stop == TRUE)
 	{
@@ -126,6 +130,36 @@ static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 	if (ret != 0 || *p_stop == TRUE)
 	{
 		return (ret);
+	}
+	return (SUCCESS);
+}
+
+static int	check_all_philos_finish_eaten(t_philo *p_philo,
+				int *p_nb_time_eaten)
+{
+	int	ret;
+
+	if (p_philo->nb_time_to_eat > 0
+		&& *p_nb_time_eaten >= p_philo->nb_time_to_eat)
+	{
+		ret = pthread_mutex_lock(p_philo->p_nb_finished_eaten_mutex);
+		if (ret != 0)
+		{
+			return (ret);
+		}
+		(*p_philo->p_nb_finished_eaten)++;
+		if (*p_philo->p_nb_finished_eaten == p_philo->nb_philos)
+		{
+			ret = pthread_mutex_lock(p_philo->p_stop_exec_mutex);
+			if (ret != 0)
+			{
+				pthread_mutex_unlock(p_philo->p_nb_finished_eaten_mutex);
+				return (ret);
+			}
+			*p_philo->p_stop_exec = TRUE;
+			pthread_mutex_unlock(p_philo->p_stop_exec_mutex);
+		}
+		pthread_mutex_unlock(p_philo->p_nb_finished_eaten_mutex);
 	}
 	return (SUCCESS);
 }

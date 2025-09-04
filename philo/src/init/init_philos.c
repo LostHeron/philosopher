@@ -24,7 +24,7 @@ int	init_philos(t_simu_stat simu_stat, t_mutexes *p_mutexes,
 {
 	int	ret;
 
-	ret = init_mutexes(simu_stat.nb_philo, p_mutexes);
+	ret = init_mutexes(simu_stat.nb_philos, p_mutexes);
 	if (ret != SUCCESS)
 	{
 		return (FAILURE);

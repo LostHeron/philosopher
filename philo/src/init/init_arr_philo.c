@@ -32,11 +32,11 @@ int	init_arr_philo(t_simu_stat simu_stat,
 {
 	int	i;
 
-	*p_arr_philo = malloc(simu_stat.nb_philo * sizeof(t_philo));
+	*p_arr_philo = malloc(simu_stat.nb_philos * sizeof(t_philo));
 	if (*p_arr_philo == NULL)
 		return (FAILURE);
 	i = 0;
-	while (i < simu_stat.nb_philo)
+	while (i < simu_stat.nb_philos)
 	{
 		fill_philo_i(p_arr_philo, simu_stat, p_mutexes, i);
 		i++;
@@ -51,15 +51,16 @@ static void	fill_philo_i(t_philo **p_arr_philo, t_simu_stat simu_stat,
 	(*p_arr_philo)[i].p_left_fork = &(p_mutexes->array_forks[i]);
 	(*p_arr_philo)[i].p_left_fork_mutex = &(p_mutexes->array_forks_mutex[i]);
 	(*p_arr_philo)[i].p_right_fork
-		= &(p_mutexes->array_forks[(i + 1) % simu_stat.nb_philo]);
+		= &(p_mutexes->array_forks[(i + 1) % simu_stat.nb_philos]);
 	(*p_arr_philo)[i].p_right_fork_mutex
-		= &(p_mutexes->array_forks_mutex[(i + 1) % simu_stat.nb_philo]);
+		= &(p_mutexes->array_forks_mutex[(i + 1) % simu_stat.nb_philos]);
 	(*p_arr_philo)[i].p_stop_exec = &p_mutexes->stop_exec;
 	(*p_arr_philo)[i].p_stop_exec_mutex = &(p_mutexes->stop_exec_mutex);
 	(*p_arr_philo)[i].time_to_die = simu_stat.time_to_die;
 	(*p_arr_philo)[i].time_to_eat = simu_stat.time_to_eat;
 	(*p_arr_philo)[i].time_to_sleep = simu_stat.time_to_sleep;
 	(*p_arr_philo)[i].nb_time_to_eat = simu_stat.nb_time_each_one_eats;
+	(*p_arr_philo)[i].nb_philos = simu_stat.nb_philos;
 	(*p_arr_philo)[i].p_nb_finished_eaten_mutex
 		= &(p_mutexes->nb_finished_eaten_mutex);
 	(*p_arr_philo)[i].p_nb_finished_eaten = &p_mutexes->nb_finished_eaten;

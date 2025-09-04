@@ -23,7 +23,7 @@ int	start_simulation(t_simu_stat simu_stat, t_philo **p_arr_philo)
 	int			nb_th_launched;
 	pthread_t	*arr_th_philo;
 
-	arr_th_philo = malloc(simu_stat.nb_philo * sizeof(pthread_t));
+	arr_th_philo = malloc(simu_stat.nb_philos * sizeof(pthread_t));
 	if (arr_th_philo == NULL)
 		return (FAILURE);
 	ret = create_philos(arr_th_philo, &simu_stat, *p_arr_philo,

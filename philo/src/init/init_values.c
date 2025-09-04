@@ -20,7 +20,7 @@ int	init_values(int nb_arg, char **argv, t_simu_stat *p_simu_stat)
 {
 	int	ret;
 
-	ret = ft_atoi_safe(argv[0], &p_simu_stat->nb_philo);
+	ret = ft_atoi_safe(argv[0], &p_simu_stat->nb_philos);
 	if (ret != 0)
 		return (print_error_atoi_safe(ret));
 	ret = ft_atoi_safe(argv[1], &p_simu_stat->time_to_die);
@@ -45,7 +45,7 @@ int	init_values(int nb_arg, char **argv, t_simu_stat *p_simu_stat)
 
 static int	check_values(int nb_arg, t_simu_stat *p_simu_stat)
 {
-	if (p_simu_stat->nb_philo <= 0)
+	if (p_simu_stat->nb_philos <= 0)
 	{
 		ft_putstr_fd("nb_philo must be strictly greater than 0\n", 2);
 		return (FAILURE);
