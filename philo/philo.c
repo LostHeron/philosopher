@@ -14,7 +14,7 @@
 #include "ft_init.h"
 #include "execution.h"
 #include "ft_clear.h"
-#include <stdio.h>
+#include "utils.h"
 
 int	main(int argc, char **argv)
 {
@@ -25,9 +25,9 @@ int	main(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("usage : ./philo	number_of_philosophers "
+		ft_putstr_fd("usage : ./philo	number_of_philosophers "
 			"time_to_die time_to_eat time_to_sleep "
-			"[number_of_times_each_philosopher_must_eat]\n");
+			"[number_of_times_each_philosopher_must_eat]\n", 2);
 		return (1);
 	}
 	ret = init_values(argc - 1, argv + 1, &simu_stat);

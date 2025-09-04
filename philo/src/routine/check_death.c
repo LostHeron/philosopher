@@ -33,13 +33,11 @@ int	check_death(t_philo *p_philo, long long last_meal, int *p_is_dead)
 	ret = check_other_death(p_philo, p_is_dead);
 	if (ret != 0 || *p_is_dead == TRUE)
 	{
-		// some else ?
 		return (ret);
 	}
 	ret = check_own_death(p_philo, last_meal, p_is_dead);
 	if (ret != 0)
 	{
-		// some else ?
 		return (ret);
 	}
 	return (SUCCESS);
@@ -75,7 +73,8 @@ static int	check_other_death(t_philo *p_philo, int *p_other_has_died)
  *	-> kill the philosopher and set *p_has_died to true;
  *	else set *p_has_died to false
 */
-static int	check_own_death(t_philo *p_philo, long long last_meal, int *p_has_died)
+static int	check_own_death(t_philo *p_philo, long long last_meal,
+				int *p_has_died)
 {
 	int			ret;
 	long long	current_time;
@@ -83,8 +82,6 @@ static int	check_own_death(t_philo *p_philo, long long last_meal, int *p_has_die
 	ret = ft_get_time(&current_time);
 	if (ret != 0)
 	{
-		// what to do ? not free forks, should be done in same function that
-		// took it in my mind.
 		return (ret);
 	}
 	if (current_time - last_meal > p_philo->time_to_die)
@@ -94,11 +91,6 @@ static int	check_own_death(t_philo *p_philo, long long last_meal, int *p_has_die
 				p_philo->p_stop_exec, p_philo);
 		if (ret != 0)
 		{
-			// what to do ? it means it could not lock mutex
-			// and say to other philo they should stop
-			// hm, idk what to do !
-			// just force the value being 1 without locking the mutex ?
-			// think lated i guess !
 			return (ret);
 		}
 	}

@@ -12,10 +12,8 @@
 
 #include "philo.h"
 #include "ft_clear.h"
-#include "utils.h"
 #include <pthread.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static int	init_array_forks(int **p_array_forks, int nb_philo);
 static int	init_array_forks_mutex(pthread_mutex_t **p_array_forks_mutex,

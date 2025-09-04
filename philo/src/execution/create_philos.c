@@ -15,7 +15,6 @@
 #include "utils.h"
 #include <pthread.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static int	pthread_create_failure(pthread_mutex_t *p_stop_exec_mutex,
 				int *p_stop_exec, pthread_mutex_t *p_start_mutex);
@@ -30,22 +29,11 @@ int	create_philos(pthread_t *arr_th_philo, t_simu_stat *p_simu_stat,
 	pthread_mutex_lock(arr_philos->p_start_mutex);
 	while (*p_nb_th_launched < p_simu_stat->nb_philo)
 	{
-		/* put all stuff inside this loop inside : create_thread_i */
 		ret = pthread_create(arr_th_philo + (*p_nb_th_launched), NULL, &routine,
 				arr_philos + (*p_nb_th_launched));
 		if (ret != 0)
-		{
 			return (pthread_create_failure(arr_philos->p_stop_exec_mutex,
 					arr_philos->p_stop_exec, arr_philos->p_start_mutex));
-		}
-		ret = pthread_mutex_lock(arr_philos->p_printf_mutex);
-		if (ret != 0)
-		{
-			pthread_mutex_unlock(arr_philos->p_start_mutex);
-			ft_putstr_fd("could not lock printf_mutex\n", 2);
-			return (ret);
-		}
-		pthread_mutex_unlock(arr_philos->p_printf_mutex);
 		(*p_nb_th_launched)++;
 	}
 	ret = init_ref_time(arr_philos, p_simu_stat->nb_philo);
@@ -67,7 +55,7 @@ static int	pthread_create_failure(pthread_mutex_t *p_stop_exec_mutex,
 	if (ret != 0)
 	{
 		ft_putstr_fd("could not lock stop_exec_mutex ->"
-			" big error in program behaviour\n", 2);
+			" critical error in program behaviour\n", 2);
 		pthread_mutex_unlock(p_start_mutex);
 		*p_stop_exec = TRUE;
 		return (ret);

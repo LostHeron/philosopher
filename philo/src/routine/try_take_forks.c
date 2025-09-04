@@ -88,4 +88,3 @@ static int	try_lock_fork(pthread_mutex_t *p_fork_mutex, int *p_fork,
 	pthread_mutex_unlock(p_fork_mutex);
 	return (SUCCESS);
 }
-

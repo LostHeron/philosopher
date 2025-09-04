@@ -33,8 +33,7 @@ int	start_philos(t_simu_stat simu_stat, t_philo **p_arr_philo)
 		ft_putstr_fd("error while creating threads", 2);
 		final_ret = ret;
 	}
-	ret = join_philos(arr_th_philo, (*p_arr_philo)->p_printf_mutex,
-			nb_th_launched);
+	ret = join_philos(arr_th_philo, nb_th_launched);
 	if (ret != 0)
 	{
 		ft_putstr_fd("error while joining threads", 2);

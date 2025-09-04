@@ -13,7 +13,6 @@
 #include "philo.h"
 #include "utils.h"
 #include "routine.h"
-#include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
 

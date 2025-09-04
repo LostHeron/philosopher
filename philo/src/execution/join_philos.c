@@ -13,29 +13,24 @@
 #include "philo.h"
 #include "utils.h"
 #include <pthread.h>
-#include <stdio.h>
 
-int	join_philos(pthread_t *arr_th_philo, pthread_mutex_t *p_printf_mutex,
-		int nb_to_join)
+int	join_philos(pthread_t *arr_th_philo, int nb_to_join)
 {
+	int	final_ret;
 	int	ret;
 	int	i;
 
 	i = 0;
+	final_ret = SUCCESS;
 	while (i < nb_to_join)
 	{
 		ret = pthread_join(arr_th_philo[i], NULL);
 		if (ret != 0)
 		{
 			ft_putstr_fd("pthread_join failed\n", 2);
-		}
-		else
-		{
-			pthread_mutex_lock(p_printf_mutex);
-			//printf("philo %i as been joined\n", i + 1);
-			pthread_mutex_unlock(p_printf_mutex);
+			final_ret = FAILURE;
 		}
 		i++;
 	}
-	return (SUCCESS);
+	return (final_ret);
 }

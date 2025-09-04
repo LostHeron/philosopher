@@ -12,7 +12,6 @@
 
 #include "philo.h"
 #include "utils.h"
-#include <stdio.h>
 
 static int	check_values(int nb_arg, t_simu_stat *p_simu_stat);
 static int	last_check(int nb_arg, t_simu_stat *p_simu_stat);
@@ -48,22 +47,22 @@ static int	check_values(int nb_arg, t_simu_stat *p_simu_stat)
 {
 	if (p_simu_stat->nb_philo <= 0)
 	{
-		printf("nb_philo must be strictly greater than 0\n");
+		ft_putstr_fd("nb_philo must be strictly greater than 0\n", 2);
 		return (FAILURE);
 	}
 	if (p_simu_stat->time_to_die < 0)
 	{
-		printf("time_to_die can not be negative\n");
+		ft_putstr_fd("time_to_die can not be negative\n", 2);
 		return (FAILURE);
 	}
 	if (p_simu_stat->time_to_eat < 0)
 	{
-		printf("time_to_eat can not be negative\n");
+		ft_putstr_fd("time_to_eat can not be negative\n", 2);
 		return (FAILURE);
 	}
 	if (p_simu_stat->time_to_sleep < 0)
 	{
-		printf("time_to_sleep can not be negative\n");
+		ft_putstr_fd("time_to_sleep can not be negative\n", 2);
 		return (FAILURE);
 	}
 	return (last_check(nb_arg, p_simu_stat));
@@ -73,7 +72,7 @@ static int	last_check(int nb_arg, t_simu_stat *p_simu_stat)
 {
 	if (nb_arg == 5 && p_simu_stat->nb_time_each_one_eats < 0)
 	{
-		printf("nb_time_each_philo_must_eat can not be negative\n");
+		ft_putstr_fd("nb_time_each_philo_must_eat can not be negative\n", 2);
 		return (FAILURE);
 	}
 	return (SUCCESS);
