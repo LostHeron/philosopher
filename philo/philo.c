@@ -36,9 +36,10 @@ int	main(int argc, char **argv)
 	ret = init_philos(simu_stat, &mutexes, &arr_philo);
 	if (ret != 0)
 	{
+		ft_putstr_fd("failed to init different structures\n", 2);
 		return (ret);
 	}
-	ret = start_philos(simu_stat, &arr_philo);
+	ret = start_simulation(simu_stat, &arr_philo);
 	clear_all(&mutexes, &arr_philo, simu_stat.nb_philo);
 	return (ret);
 }

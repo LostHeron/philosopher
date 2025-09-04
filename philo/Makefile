@@ -29,7 +29,7 @@ UTILS_FILES := ft_atoi_safe.c \
 			   usleep_failure.c \
 
 EXECUTION_DIR := src/execution/
-EXECUTION_FILES := start_philos.c \
+EXECUTION_FILES := start_simulation.c \
 				   create_philos.c \
 				   join_philos.c \
 

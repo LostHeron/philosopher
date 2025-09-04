@@ -54,7 +54,8 @@ typedef struct s_mutexes
 	pthread_mutex_t	*array_forks_mutex;
 	int				stop_exec;
 	pthread_mutex_t	stop_exec_mutex;
-	pthread_mutex_t	printf_mutex;
+	pthread_mutex_t	nb_finished_eaten_mutex;
+	int				nb_finished_eaten;
 	pthread_mutex_t	start_mutex;
 }				t_mutexes;
 
@@ -73,7 +74,8 @@ typedef struct s_philo
 	pthread_mutex_t	*p_right_fork_mutex;
 	int				*p_stop_exec;
 	pthread_mutex_t	*p_stop_exec_mutex;
-	pthread_mutex_t	*p_printf_mutex;
+	pthread_mutex_t	*p_nb_finished_eaten_mutex;
+	int				*p_nb_finished_eaten;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;

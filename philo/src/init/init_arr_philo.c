@@ -60,6 +60,8 @@ static void	fill_philo_i(t_philo **p_arr_philo, t_simu_stat simu_stat,
 	(*p_arr_philo)[i].time_to_eat = simu_stat.time_to_eat;
 	(*p_arr_philo)[i].time_to_sleep = simu_stat.time_to_sleep;
 	(*p_arr_philo)[i].nb_time_to_eat = simu_stat.nb_time_each_one_eats;
-	(*p_arr_philo)[i].p_printf_mutex = &(p_mutexes->printf_mutex);
+	(*p_arr_philo)[i].p_nb_finished_eaten_mutex
+		= &(p_mutexes->nb_finished_eaten_mutex);
+	(*p_arr_philo)[i].p_nb_finished_eaten = &p_mutexes->nb_finished_eaten;
 	(*p_arr_philo)[i].p_start_mutex = &(p_mutexes->start_mutex);
 }

@@ -23,7 +23,7 @@ void	clear_all(t_mutexes *p_mutexes, t_philo **p_arr_philo, int nb_philo)
 	free(*p_arr_philo);
 	*p_arr_philo = NULL;
 	pthread_mutex_destroy(&p_mutexes->stop_exec_mutex);
-	pthread_mutex_destroy(&p_mutexes->printf_mutex);
+	pthread_mutex_destroy(&p_mutexes->nb_finished_eaten_mutex);
 	pthread_mutex_destroy(&p_mutexes->start_mutex);
 	return ;
 }

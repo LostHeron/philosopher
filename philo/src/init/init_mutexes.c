@@ -95,7 +95,8 @@ static int	init_other_mutex(t_mutexes *p_mutexes)
 	{
 		return (FAILURE);
 	}
-	ret = pthread_mutex_init(&p_mutexes->printf_mutex, NULL);
+	p_mutexes->nb_finished_eaten = 0;
+	ret = pthread_mutex_init(&p_mutexes->nb_finished_eaten_mutex, NULL);
 	if (ret < 0)
 	{
 		pthread_mutex_destroy(&p_mutexes->stop_exec_mutex);
@@ -105,7 +106,7 @@ static int	init_other_mutex(t_mutexes *p_mutexes)
 	if (ret < 0)
 	{
 		pthread_mutex_destroy(&p_mutexes->stop_exec_mutex);
-		pthread_mutex_destroy(&p_mutexes->printf_mutex);
+		pthread_mutex_destroy(&p_mutexes->nb_finished_eaten_mutex);
 		return (FAILURE);
 	}
 	return (SUCCESS);

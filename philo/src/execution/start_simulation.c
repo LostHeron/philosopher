@@ -16,7 +16,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-int	start_philos(t_simu_stat simu_stat, t_philo **p_arr_philo)
+int	start_simulation(t_simu_stat simu_stat, t_philo **p_arr_philo)
 {
 	int			final_ret;
 	int			ret;
