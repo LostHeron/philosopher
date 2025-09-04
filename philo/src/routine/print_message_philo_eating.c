@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:22:48 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 17:54:46 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 17:59:53 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	check_all_philos_finish_eaten(t_philo *p_philo,
 {
 	int	ret;
 
-	if (p_philo->nb_time_to_eat > 0
+	if (p_philo->nb_time_to_eat >= 0
 		&& *p_nb_time_eaten >= p_philo->nb_time_to_eat
 		&& p_philo->nb_finished_eaten_incremented == FALSE)
 	{
