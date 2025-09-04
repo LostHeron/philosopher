@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/09/04 15:19:15 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/04 17:34:25 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ ROUTINE_FILES := routine.c \
 				 try_think.c \
 				 print_message_philo.c \
 				 print_message_philo_no_check.c \
+				 print_message_philo_eating.c \
 				 kill_philo.c \
 				 check_death.c \
 

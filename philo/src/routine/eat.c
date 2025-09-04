@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 15:07:50 by jweber            #+#    #+#             */
-/*   Updated: 2025/08/27 18:38:50 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 17:34:11 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
  *	function to stop thread execution by returning a non null integer 
  *	or by setting *p_stop to TRUE respectively
 */
-int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
+int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
+		int *p_nb_time_eaten)
 {
 	long long	eat_start_time;
 	int			ret;
@@ -41,7 +42,8 @@ int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
 	if (ret != SUCCESS)
 		return (ret);
 	*p_last_meal = eat_start_time;
-	ret = print_message_philo(p_philo,
+	(*p_nb_time_eaten)++;
+	ret = print_message_philo_eating(p_philo, p_nb_time_eaten,
 			eat_start_time - p_philo->ref_time,
 			"is eating");
 	if (ret != SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:47:39 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/03 11:39:32 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 17:22:41 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ static int	free_forks(t_philo *p_philo);
 
 /* In this function the philosopher tries to eat 
 */
-int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop)
+int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
+		int *p_nb_time_eaten)
 {
 	int			ret;
 
 	ret = prepare_eating_loop(p_philo, p_stop, p_last_meal);
 	if (ret != SUCCESS || *p_stop == TRUE)
 		return (ret);
-	ret = eat(p_philo, p_last_meal, p_stop);
+	ret = eat(p_philo, p_last_meal, p_stop, p_nb_time_eaten);
 	if (ret != 0 || *p_stop == TRUE)
 	{
 		free_forks(p_philo);

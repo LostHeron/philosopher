@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:28 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 15:16:51 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 17:32:08 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@ int		wait_to_shift_even_philos(t_philo *p_philo, int *p_stop,
 int		print_message_philo(t_philo *p_philo, long long time, char *str);
 int		print_message_philo_no_check(t_philo *p_philo, long long time,
 			char *str);
-int		try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop_exec);
+int		print_message_philo_eating(t_philo *p_philo, int *p_nb_time_eaten,
+			long long time, char *str);
+int		try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
+			int *p_nb_time_eaten);
 int		try_take_forks(t_philo *p_philo, int *p_can_eat,
 			int *p_right_fork_locked, int *p_left_fork_locked);
-int		eat(t_philo *p_philo, long long *p_last_meal, int *p_stop);
+int		eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
+			int *p_nb_time_eaten);
 int		try_sleep(t_philo *p_philo, long long last_meal, int *p_stop);
 int		try_think(t_philo *p_philo, int *p_stop);
 int		check_death(t_philo *p_philo, long long last_meal, int *p_has_died);

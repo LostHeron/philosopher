@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 18:19:52 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/02 12:22:33 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 17:13:07 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static int	check_own_death(t_philo *p_philo, long long last_meal,
  *	This function passes *p_is_dead to check_other_death and 
  *	check_own_death, it set *p_is_dead to TRUE if one other thread or
  *	this thread has died !
+ *
+ *	to check :
+ *		-> check_other_death fail : TO DO ;
+ *		-> check_own_death : TO DO ;
 */
 int	check_death(t_philo *p_philo, long long last_meal, int *p_is_dead)
 {
@@ -46,6 +50,9 @@ int	check_death(t_philo *p_philo, long long last_meal, int *p_is_dead)
 /* This function should check if a philosopher has died
  *	-> if a philosopher has died, put *p_other_has_died to True,
  *	-> else put *p_other_has_died to_false;
+ *	
+ *	to check
+ *		-> pthread_mutex_lock fail : TO DO ;
 */
 static int	check_other_death(t_philo *p_philo, int *p_other_has_died)
 {

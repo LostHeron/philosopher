@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:12:13 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/01 13:07:28 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 16:04:48 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	fill_philo_i(t_philo **p_arr_philo, t_simu_stat simu_stat,
  *	writting this here cause i had trouble finding the error !
  *
  *	to check 
- *		-> malloc fail : TO DO;
+ *		-> malloc fail : DONE -> OK !
 */
 int	init_arr_philo(t_simu_stat simu_stat,
 			t_mutexes *p_mutexes, t_philo **p_arr_philo)
@@ -69,4 +69,5 @@ static void	fill_philo_i(t_philo **p_arr_philo, t_simu_stat simu_stat,
 	(*p_arr_philo)[i].p_nb_finished_eaten = &p_mutexes->nb_finished_eaten;
 	(*p_arr_philo)[i].nb_finished_eaten_incremented = FALSE;
 	(*p_arr_philo)[i].p_start_mutex = &(p_mutexes->start_mutex);
+	(*p_arr_philo)[i].return_value = SUCCESS;
 }

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:54:49 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/01 13:09:45 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 16:06:39 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,10 @@ static int	check_values(int nb_arg, t_simu_stat *p_simu_stat)
 
 static int	last_check(int nb_arg, t_simu_stat *p_simu_stat)
 {
-	if (nb_arg == 5 && p_simu_stat->nb_time_each_one_eats < 0)
+	if (nb_arg == 5 && p_simu_stat->nb_time_each_one_eats <= 0)
 	{
-		ft_putstr_fd("nb_time_each_philo_must_eat can not be negative\n", 2);
+		ft_putstr_fd("nb_time_each_philo_must_eat must be "
+			"stricly positive\n", 2);
 		return (FAILURE);
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 12:28:59 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/01 13:06:55 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 15:22:16 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
  *		p_arr_philo data arr filled from p_mutexes and philo_stat !
  *	to check :
  *		-> init_mutexes fail : DONE -> OK !
- *		-> init_arr_philo fial : TO DO ;
+ *		-> init_arr_philo fial : DONE -> OK ! (have forgot to clear memory
+ *		allocated in init_mutexes)
 */
 int	init_philos(t_simu_stat simu_stat, t_mutexes *p_mutexes,
 		t_philo **p_arr_philo)

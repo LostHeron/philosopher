@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:51:17 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/02 17:38:07 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 16:05:07 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	pthread_mutex_t	*p_start_mutex;
+	int				return_value;
 }				t_philo;
 
 #endif

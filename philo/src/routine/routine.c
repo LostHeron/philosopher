@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:04 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 15:17:45 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 17:47:16 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 				int *p_stop, int *p_nb_time_eaten);
 static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 				int *p_stop, int *p_nb_time_eaten);
-static int	check_all_philos_finish_eaten(t_philo *p_philo,
-				int *p_nb_time_eaten);
 static void	set_stop_to_true(t_philo *p_philo);
 
 /* This is the main starting point for each thread !
@@ -36,6 +34,10 @@ static void	set_stop_to_true(t_philo *p_philo);
  *	associated with it, but if it fails, 
  *	forcing it causing a data ok, but yet assuring 
  *	but assuring that other thread will know it is locked !
+ *
+ *	to check : 
+ *		-> routine_init fail : TO DO ;
+ *		-> routine_loop fail : TO DO ;
 */
 void	*routine(void *args)
 {
@@ -72,6 +74,12 @@ void	*routine(void *args)
  *	-> then make even philosopher wait for half eating time
  *		which let odd philosopher all eat at the same time
  *		execpt for one if the number of philosopher is odd 
+ *
+ *	To check : 
+ *		-> first pthread_mutex_lock fail : DONE -> OK !
+ *		-> check_death_fail : TO DO ;
+ *		-> try_think fail : TO DO ;
+ *		-> wait_to_shift_even_philos fial: TO DO ;
 */
 static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 				int *p_stop, int *p_nb_time_eaten)
@@ -81,7 +89,7 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 	ret = pthread_mutex_lock(p_philo->p_start_mutex);
 	if (ret != 0)
 	{
-		ft_putstr_fd("could not lock start mutex, aborting\n", 2);
+		ft_putstr_fd("pthread_mutex_lock failed\n", 2);
 		return (FAILURE);
 	}
 	pthread_mutex_unlock(p_philo->p_start_mutex);
@@ -96,7 +104,7 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 		return (ret);
 	if (p_philo->philo_id % 2 == 0)
 		if (wait_to_shift_even_philos(p_philo, p_stop,
-				*p_last_meal, p_philo->time_to_eat * 1000 / 2) < 0)
+				*p_last_meal, p_philo->time_to_eat / 2) != SUCCESS)
 			return (FAILURE);
 	return (SUCCESS);
 }
@@ -113,15 +121,11 @@ static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 {
 	int	ret;
 
-	ret = try_eat(p_philo, p_last_meal, p_stop);
+	ret = try_eat(p_philo, p_last_meal, p_stop, p_nb_time_eaten);
 	if (ret != 0 || *p_stop == TRUE)
 	{
 		return (ret);
 	}
-	(*p_nb_time_eaten)++;
-	ret = check_all_philos_finish_eaten(p_philo, p_nb_time_eaten);
-	if (ret != SUCCESS)
-		return (ret);
 	ret = try_sleep(p_philo, *p_last_meal, p_stop);
 	if (ret != 0 || *p_stop == TRUE)
 	{
@@ -135,40 +139,18 @@ static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 	return (SUCCESS);
 }
 
-static int	check_all_philos_finish_eaten(t_philo *p_philo,
-				int *p_nb_time_eaten)
+/* This function try to set p_stop_exec to true by first trying to
+ * lock the mutex associated with it but then forcing it if it fails !
+*/
+static void	set_stop_to_true(t_philo *p_philo)
 {
 	int	ret;
 
-	if (p_philo->nb_time_to_eat > 0
-		&& *p_nb_time_eaten >= p_philo->nb_time_to_eat
-		&& p_philo->nb_finished_eaten_incremented == FALSE)
-	{
-		ret = pthread_mutex_lock(p_philo->p_nb_finished_eaten_mutex);
-		if (ret != 0)
-			return (ret);
-		(*p_philo->p_nb_finished_eaten)++;
-		if (*p_philo->p_nb_finished_eaten == p_philo->nb_philos)
-		{
-			ret = pthread_mutex_lock(p_philo->p_stop_exec_mutex);
-			if (ret != 0)
-			{
-				pthread_mutex_unlock(p_philo->p_nb_finished_eaten_mutex);
-				return (ret);
-			}
-			*p_philo->p_stop_exec = TRUE;
-			p_philo->nb_finished_eaten_incremented = TRUE;
-			pthread_mutex_unlock(p_philo->p_stop_exec_mutex);
-		}
-		pthread_mutex_unlock(p_philo->p_nb_finished_eaten_mutex);
-	}
-	return (SUCCESS);
-}
-
-static void	set_stop_to_true(t_philo *p_philo)
-{
-	pthread_mutex_lock(p_philo->p_stop_exec_mutex);
+	ret = pthread_mutex_lock(p_philo->p_stop_exec_mutex);
+	if (ret != 0)
+		ft_putstr_fd("pthread_mutex_lock failed\n", 2);
 	*p_philo->p_stop_exec = TRUE;
 	pthread_mutex_unlock(p_philo->p_stop_exec_mutex);
+	p_philo->return_value = FAILURE;
 	return ;
 }

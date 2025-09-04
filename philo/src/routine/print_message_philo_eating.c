@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_message_philo.c                              :+:      :+:    :+:   */
+/*   print_message_philo_eating.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:22:48 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 17:29:57 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 17:54:46 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 #include <unistd.h>
 
 static void	prepare_buffer(t_philo *p_philo, long long time, char *str);
+static int	check_all_philos_finish_eaten(t_philo *p_philo,
+				int *p_nb_time_eaten);
 
-int	print_message_philo(t_philo *p_philo, long long time, char *str)
+int	print_message_philo_eating(t_philo *p_philo, int *p_nb_time_eaten,
+		long long time, char *str)
 {
 	int	ret;
 
@@ -31,15 +34,15 @@ int	print_message_philo(t_philo *p_philo, long long time, char *str)
 	if (*p_philo->p_stop_exec == FALSE)
 	{
 		ret = write(1, p_philo->buf_msg, p_philo->buf_msg_len);
+		if (ret < 0)
+		{
+			ft_putstr_fd("write error !\n", 2);
+			return (FAILURE);
+		}
 	}
+	ret = check_all_philos_finish_eaten(p_philo, p_nb_time_eaten);
 	pthread_mutex_unlock(p_philo->p_stop_exec_mutex);
-	if (ret < 0)
-	{
-		ft_putstr_fd("write error !\n", 2);
-		return (FAILURE);
-	}
-	else
-		return (SUCCESS);
+	return (ret);
 }
 
 static void	prepare_buffer(t_philo *p_philo, long long time, char *str)
@@ -53,4 +56,27 @@ static void	prepare_buffer(t_philo *p_philo, long long time, char *str)
 	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, "\t");
 	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, str);
 	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, "\n");
+}
+
+static int	check_all_philos_finish_eaten(t_philo *p_philo,
+				int *p_nb_time_eaten)
+{
+	int	ret;
+
+	if (p_philo->nb_time_to_eat > 0
+		&& *p_nb_time_eaten >= p_philo->nb_time_to_eat
+		&& p_philo->nb_finished_eaten_incremented == FALSE)
+	{
+		ret = pthread_mutex_lock(p_philo->p_nb_finished_eaten_mutex);
+		if (ret != 0)
+			return (ret);
+		(*p_philo->p_nb_finished_eaten)++;
+		p_philo->nb_finished_eaten_incremented = TRUE;
+		if (*p_philo->p_nb_finished_eaten == p_philo->nb_philos)
+		{
+			*p_philo->p_stop_exec = TRUE;
+		}
+		pthread_mutex_unlock(p_philo->p_nb_finished_eaten_mutex);
+	}
+	return (SUCCESS);
 }
