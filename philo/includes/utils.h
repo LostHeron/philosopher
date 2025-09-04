@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 16:27:45 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/03 11:25:33 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 19:55:25 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		ft_get_time(long long *p_time);
 void	ft_strcat_nb(char *buf, size_t *p_buf_len, long long nb);
 void	ft_strcat_str(char *buf, size_t *p_buf_len, const char *src);
 int		usleep_failure(void);
+int		pthread_mutex_lock_failure(int ret);
 
 #endif

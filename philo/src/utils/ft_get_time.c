@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:07:59 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/02 17:40:57 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 19:58:03 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_get_time(long long *p_time)
 	ret = gettimeofday(&tv, NULL);
 	if (ret < 0)
 	{
-		ft_putstr_fd("gettimeofday failure\n", 2);
+		ft_putstr_fd("gettimeofday failed\n", 2);
 		return (ret);
 	}
 	*p_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;

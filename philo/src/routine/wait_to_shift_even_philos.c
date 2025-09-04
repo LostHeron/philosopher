@@ -18,6 +18,11 @@
 static int	check_finished_waiting(long long wait_start_time,
 				int *p_done_eating, int time_to_wait);
 
+/* to check
+ *	-> usleep fail : TO DO;
+ *	-> check_death fail : TO DO ;
+ *	-> check_finished_waiting : TO DO ;
+*/
 int	wait_to_shift_even_philos(t_philo *p_philo, int *p_stop,
 				long long last_meal, long long time_to_wait)
 {

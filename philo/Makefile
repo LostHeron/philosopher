@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/09/04 17:34:25 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/04 19:55:49 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ UTILS_FILES := ft_atoi_safe.c \
 			   ft_strcat_str.c \
 			   ft_strlen.c \
 			   usleep_failure.c \
+			   pthread_mutex_lock_failure.c \
 
 EXECUTION_DIR := src/execution/
 EXECUTION_FILES := start_simulation.c \
@@ -44,7 +45,7 @@ ROUTINE_FILES := routine.c \
 				 print_message_philo.c \
 				 print_message_philo_no_check.c \
 				 print_message_philo_eating.c \
-				 kill_philo.c \
+				 try_kill_philo.c \
 				 check_death.c \
 
 CLEAR_DIR := src/clear/

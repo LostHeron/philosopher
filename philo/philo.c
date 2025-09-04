@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:41:26 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 16:18:18 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 18:48:00 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	main(int argc, char **argv)
 	t_philo		*arr_philo;
 
 	if (argc < 5 || argc > 6)
-	{
 		return (wrong_nb_args());
-	}
 	ret = init_values(argc - 1, argv + 1, &simu_stat);
 	if (ret != SUCCESS)
 		return (FAILURE);
@@ -49,6 +47,8 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("an error occured\n", 2);
 	if (ret == 0)
 		ret = get_philos_return_status(arr_philo, simu_stat.nb_philos);
+	if (ret != 0)
+		ft_putstr_fd("an error occured in one or more threads\n", 2);
 	clear_all(&mutexes, &arr_philo, simu_stat.nb_philos);
 	return (ret);
 }

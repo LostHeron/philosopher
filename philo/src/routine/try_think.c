@@ -15,7 +15,11 @@
 #include "utils.h"
 #include <unistd.h>
 
-int	try_think(t_philo *p_philo, int *p_stop)
+/* to check
+ *	-> ft_get_time fail : DONE -> OK !
+ *	-> print_message_philo : DONE -> OK !
+*/
+int	try_think(t_philo *p_philo)
 {
 	long long	think_start_time;
 	int			ret;
@@ -23,7 +27,6 @@ int	try_think(t_philo *p_philo, int *p_stop)
 	ret = ft_get_time(&think_start_time);
 	if (ret != 0)
 	{
-		*p_stop = TRUE;
 		return (ret);
 	}
 	ret = print_message_philo(p_philo,
@@ -31,7 +34,6 @@ int	try_think(t_philo *p_philo, int *p_stop)
 			"is thinking");
 	if (ret != 0)
 	{
-		*p_stop = TRUE;
 		return (ret);
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:04 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 17:47:16 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 19:58:29 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*routine(void *args)
  *
  *	To check : 
  *		-> first pthread_mutex_lock fail : DONE -> OK !
- *		-> check_death_fail : TO DO ;
+ *		-> check_death fail : TO DO ;
  *		-> try_think fail : TO DO ;
  *		-> wait_to_shift_even_philos fial: TO DO ;
 */
@@ -99,8 +99,8 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 	ret = check_death(p_philo, *p_last_meal, p_stop);
 	if (ret != 0 || *p_stop == TRUE)
 		return (ret);
-	ret = try_think(p_philo, p_stop);
-	if (ret != SUCCESS || *p_stop == TRUE)
+	ret = try_think(p_philo);
+	if (ret != SUCCESS)
 		return (ret);
 	if (p_philo->philo_id % 2 == 0)
 		if (wait_to_shift_even_philos(p_philo, p_stop,
@@ -131,8 +131,8 @@ static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 	{
 		return (ret);
 	}
-	ret = try_think(p_philo, p_stop);
-	if (ret != 0 || *p_stop == TRUE)
+	ret = try_think(p_philo);
+	if (ret != SUCCESS)
 	{
 		return (ret);
 	}
@@ -148,7 +148,7 @@ static void	set_stop_to_true(t_philo *p_philo)
 
 	ret = pthread_mutex_lock(p_philo->p_stop_exec_mutex);
 	if (ret != 0)
-		ft_putstr_fd("pthread_mutex_lock failed\n", 2);
+		pthread_mutex_lock_failure(ret);
 	*p_philo->p_stop_exec = TRUE;
 	pthread_mutex_unlock(p_philo->p_stop_exec_mutex);
 	p_philo->return_value = FAILURE;

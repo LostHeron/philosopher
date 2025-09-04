@@ -30,7 +30,7 @@ int		try_take_forks(t_philo *p_philo, int *p_can_eat,
 int		eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
 			int *p_nb_time_eaten);
 int		try_sleep(t_philo *p_philo, long long last_meal, int *p_stop);
-int		try_think(t_philo *p_philo, int *p_stop);
+int		try_think(t_philo *p_philo);
 int		check_death(t_philo *p_philo, long long last_meal, int *p_has_died);
 int		try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
 			t_philo *p_philo);

@@ -30,7 +30,7 @@ int	print_message_philo_no_check(t_philo *p_philo, long long time, char *str)
 	ret = write(1, p_philo->buf_msg, p_philo->buf_msg_len);
 	if (ret < 0)
 	{
-		ft_putstr_fd("write error !\n", 2);
+		ft_putstr_fd("write failed\n", 2);
 		return (FAILURE);
 	}
 	else

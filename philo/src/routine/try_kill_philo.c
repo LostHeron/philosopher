@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kill_philo.c                                       :+:      :+:    :+:   */
+/*   try_kill_philo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 10:46:07 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/02 17:26:41 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 19:56:07 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
  *	doing so
  *		-> If mutex_lock fail, return an error,
  *		-> else return (SUCCESS);
+ *
+ *	to check :
+ *		-> pthread_mutex_lock fail : DONE -> OK !
+ *		-> ft_get_time fail : DONE -> OK !
+ *		-> print_meage_philo_no_check fail : DONE -> OK !
 */
 int	try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
 		t_philo *p_philo)
@@ -30,7 +35,7 @@ int	try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
 
 	ret = pthread_mutex_lock(p_stop_exec_mutex);
 	if (ret != 0)
-		return (ret);
+		return (pthread_mutex_lock_failure(ret));
 	if (*p_stop_exec == FALSE)
 	{
 		*p_stop_exec = TRUE;
@@ -44,9 +49,8 @@ int	try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
 		ret = ft_get_time(&current_time);
 		if (ret != 0)
 			return (ret);
-		print_message_philo_no_check(p_philo,
-			current_time - p_philo->ref_time,
-			"died");
+		return (print_message_philo_no_check(p_philo,
+				current_time - p_philo->ref_time, "died"));
 	}
 	return (SUCCESS);
 }

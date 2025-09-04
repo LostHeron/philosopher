@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 18:19:52 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 17:13:07 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 18:50:19 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static int	check_own_death(t_philo *p_philo, long long last_meal,
  *	this thread has died !
  *
  *	to check :
- *		-> check_other_death fail : TO DO ;
- *		-> check_own_death : TO DO ;
+ *		-> check_other_death fail : DONE -> OK !
+ *		-> check_own_death : DONE -> OK !
 */
 int	check_death(t_philo *p_philo, long long last_meal, int *p_is_dead)
 {
@@ -52,7 +52,7 @@ int	check_death(t_philo *p_philo, long long last_meal, int *p_is_dead)
  *	-> else put *p_other_has_died to_false;
  *	
  *	to check
- *		-> pthread_mutex_lock fail : TO DO ;
+ *		-> pthread_mutex_lock fail : DONE -> OK !
 */
 static int	check_other_death(t_philo *p_philo, int *p_other_has_died)
 {
@@ -60,7 +60,7 @@ static int	check_other_death(t_philo *p_philo, int *p_other_has_died)
 
 	ret = pthread_mutex_lock(p_philo->p_stop_exec_mutex);
 	if (ret != 0)
-		return (ret);
+		return (pthread_mutex_lock_failure(ret));
 	if (*p_philo->p_stop_exec == TRUE)
 	{
 		*p_other_has_died = TRUE;
@@ -79,6 +79,10 @@ static int	check_other_death(t_philo *p_philo, int *p_other_has_died)
  *	if p_philo->time_to_die < (comparing it against current_time - last_meal)
  *	-> kill the philosopher and set *p_has_died to true;
  *	else set *p_has_died to false
+ *
+ *	to check
+ *		-> ft_get_time fail : DONE -> OK !
+ *		-> try_kill_philo fail : DONE -> OK !
 */
 static int	check_own_death(t_philo *p_philo, long long last_meal,
 				int *p_has_died)

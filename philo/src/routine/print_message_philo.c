@@ -24,10 +24,7 @@ int	print_message_philo(t_philo *p_philo, long long time, char *str)
 	prepare_buffer(p_philo, time, str);
 	ret = pthread_mutex_lock(p_philo->p_stop_exec_mutex);
 	if (ret != 0)
-	{
-		ft_putstr_fd("pthread_mutex_lock fail to lock printf mutex\n", 2);
-		return (ret);
-	}
+		return (pthread_mutex_lock_failure(ret));
 	if (*p_philo->p_stop_exec == FALSE)
 	{
 		ret = write(1, p_philo->buf_msg, p_philo->buf_msg_len);
@@ -35,7 +32,7 @@ int	print_message_philo(t_philo *p_philo, long long time, char *str)
 	pthread_mutex_unlock(p_philo->p_stop_exec_mutex);
 	if (ret < 0)
 	{
-		ft_putstr_fd("write error !\n", 2);
+		ft_putstr_fd("write failed\n", 2);
 		return (FAILURE);
 	}
 	else
