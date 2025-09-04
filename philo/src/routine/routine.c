@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:04 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/02 19:54:46 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 15:17:45 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 	if (ret != SUCCESS || *p_stop == TRUE)
 		return (ret);
 	if (p_philo->philo_id % 2 == 0)
-		if (usleep(p_philo->time_to_eat * 1000 / 2) < 0)
+		if (wait_to_shift_even_philos(p_philo, p_stop,
+				*p_last_meal, p_philo->time_to_eat * 1000 / 2) < 0)
 			return (FAILURE);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:28 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/02 17:26:17 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/04 15:16:51 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "philo.h"
 
 void	*routine(void *args);
+int		wait_to_shift_even_philos(t_philo *p_philo, int *p_stop,
+			long long last_meal, long long time_to_wait);
 int		print_message_philo(t_philo *p_philo, long long time, char *str);
 int		print_message_philo_no_check(t_philo *p_philo, long long time,
 			char *str);

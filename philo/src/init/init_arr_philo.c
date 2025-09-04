@@ -26,6 +26,9 @@ static void	fill_philo_i(t_philo **p_arr_philo, t_simu_stat simu_stat,
  *	(*p_arr_philo)[i].p_start_mutex = &(p_mutexes->start_mutex); is the correct
  *	statement.
  *	writting this here cause i had trouble finding the error !
+ *
+ *	to check 
+ *		-> malloc fail : TO DO;
 */
 int	init_arr_philo(t_simu_stat simu_stat,
 			t_mutexes *p_mutexes, t_philo **p_arr_philo)

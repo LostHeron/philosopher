@@ -23,9 +23,9 @@ static int	init_other_mutex(t_mutexes *p_mutexes);
 /*		This function should initialize the different forks 
  *	and init each mutex associated with the forks 
  *	to check : 
- *		-> init_array_forks fail : TO DO;
- *		-> init_array_forks_mutex fail : TO DO ;
- *		-> init_other_mutex fail : TO DO ;
+ *		-> init_array_forks fail : DONE -> OK !
+ *		-> init_array_forks_mutex fail : DONE -> OK !
+ *		-> init_other_mutex fail : DONE -> OK !
 */
 int	init_mutexes(int nb_philo, t_mutexes *p_mutexes)
 {
@@ -69,6 +69,10 @@ static int	init_array_forks(int **p_array_forks, int nb_philo)
 	return (SUCCESS);
 }
 
+/* to check
+ *	-> malloc fail : DONE -> OK !
+ *	-> pthread_mutex_init : DONE -> OK !
+*/
 static int	init_array_forks_mutex(pthread_mutex_t **p_array_forks_mutex,
 					int nb_philo)
 {
@@ -92,25 +96,30 @@ static int	init_array_forks_mutex(pthread_mutex_t **p_array_forks_mutex,
 	return (SUCCESS);
 }
 
+/* to check :
+ *	-> first pthread_mutex_init fail : DONE -> OK !
+ *	-> second pthread_mutex_init fail : DONE -> OK !
+ *	-> third pthread_mutex_init fail : DONE -> OK !
+*/
 static int	init_other_mutex(t_mutexes *p_mutexes)
 {
 	int	ret;
 
 	p_mutexes->stop_exec = FALSE;
 	ret = pthread_mutex_init(&p_mutexes->stop_exec_mutex, NULL);
-	if (ret < 0)
+	if (ret != 0)
 	{
 		return (FAILURE);
 	}
 	p_mutexes->nb_finished_eaten = 0;
 	ret = pthread_mutex_init(&p_mutexes->nb_finished_eaten_mutex, NULL);
-	if (ret < 0)
+	if (ret != 0)
 	{
 		pthread_mutex_destroy(&p_mutexes->stop_exec_mutex);
 		return (FAILURE);
 	}
 	ret = pthread_mutex_init(&p_mutexes->start_mutex, NULL);
-	if (ret < 0)
+	if (ret != 0)
 	{
 		pthread_mutex_destroy(&p_mutexes->stop_exec_mutex);
 		pthread_mutex_destroy(&p_mutexes->nb_finished_eaten_mutex);

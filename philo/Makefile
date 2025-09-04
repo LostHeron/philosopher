@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/09/03 11:24:36 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/04 15:19:15 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ EXECUTION_FILES := start_simulation.c \
 
 ROUTINE_DIR := src/routine/
 ROUTINE_FILES := routine.c \
+				 wait_to_shift_even_philos.c \
 				 try_eat.c \
 				 try_take_forks.c \
 				 eat.c \
