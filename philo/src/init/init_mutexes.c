@@ -22,6 +22,10 @@ static int	init_other_mutex(t_mutexes *p_mutexes);
 
 /*		This function should initialize the different forks 
  *	and init each mutex associated with the forks 
+ *	to check : 
+ *		-> init_array_forks fail : TO DO;
+ *		-> init_array_forks_mutex fail : TO DO ;
+ *		-> init_other_mutex fail : TO DO ;
 */
 int	init_mutexes(int nb_philo, t_mutexes *p_mutexes)
 {
@@ -46,6 +50,9 @@ int	init_mutexes(int nb_philo, t_mutexes *p_mutexes)
 	return (SUCCESS);
 }
 
+/* to check
+ *	-> malloc fail : DONE -> OK !
+*/
 static int	init_array_forks(int **p_array_forks, int nb_philo)
 {
 	int	i;

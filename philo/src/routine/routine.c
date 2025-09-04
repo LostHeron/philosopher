@@ -140,13 +140,12 @@ static int	check_all_philos_finish_eaten(t_philo *p_philo,
 	int	ret;
 
 	if (p_philo->nb_time_to_eat > 0
-		&& *p_nb_time_eaten >= p_philo->nb_time_to_eat)
+		&& *p_nb_time_eaten >= p_philo->nb_time_to_eat
+		&& p_philo->nb_finished_eaten_incremented == FALSE)
 	{
 		ret = pthread_mutex_lock(p_philo->p_nb_finished_eaten_mutex);
 		if (ret != 0)
-		{
 			return (ret);
-		}
 		(*p_philo->p_nb_finished_eaten)++;
 		if (*p_philo->p_nb_finished_eaten == p_philo->nb_philos)
 		{
@@ -157,6 +156,7 @@ static int	check_all_philos_finish_eaten(t_philo *p_philo,
 				return (ret);
 			}
 			*p_philo->p_stop_exec = TRUE;
+			p_philo->nb_finished_eaten_incremented = TRUE;
 			pthread_mutex_unlock(p_philo->p_stop_exec_mutex);
 		}
 		pthread_mutex_unlock(p_philo->p_nb_finished_eaten_mutex);

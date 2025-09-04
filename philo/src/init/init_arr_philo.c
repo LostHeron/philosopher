@@ -64,5 +64,6 @@ static void	fill_philo_i(t_philo **p_arr_philo, t_simu_stat simu_stat,
 	(*p_arr_philo)[i].p_nb_finished_eaten_mutex
 		= &(p_mutexes->nb_finished_eaten_mutex);
 	(*p_arr_philo)[i].p_nb_finished_eaten = &p_mutexes->nb_finished_eaten;
+	(*p_arr_philo)[i].nb_finished_eaten_incremented = FALSE;
 	(*p_arr_philo)[i].p_start_mutex = &(p_mutexes->start_mutex);
 }

@@ -18,6 +18,9 @@
  *		->p_arr_philo : an array where each element correspond to the data needed
  *		by each philosopher for its execution
  *		p_arr_philo data arr filled from p_mutexes and philo_stat !
+ *	to check :
+ *		-> init_mutexes fail : TO DO ;
+ *		-> initi_arr_philo fial : TO DO ;
 */
 int	init_philos(t_simu_stat simu_stat, t_mutexes *p_mutexes,
 		t_philo **p_arr_philo)

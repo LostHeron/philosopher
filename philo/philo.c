@@ -16,6 +16,11 @@
 #include "ft_clear.h"
 #include "utils.h"
 
+/* to check
+ *	-> init_values failure : DONE -> OK !
+ *	-> init_philos failure : TO DO ;
+ *	-> start simulation fail : TO DO ;
+*/
 int	main(int argc, char **argv)
 {
 	int			ret;

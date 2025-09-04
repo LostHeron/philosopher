@@ -76,6 +76,7 @@ typedef struct s_philo
 	pthread_mutex_t	*p_stop_exec_mutex;
 	pthread_mutex_t	*p_nb_finished_eaten_mutex;
 	int				*p_nb_finished_eaten;
+	int				nb_finished_eaten_incremented;
 	int				nb_philos;
 	int				time_to_die;
 	int				time_to_eat;

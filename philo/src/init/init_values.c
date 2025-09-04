@@ -16,6 +16,14 @@
 static int	check_values(int nb_arg, t_simu_stat *p_simu_stat);
 static int	last_check(int nb_arg, t_simu_stat *p_simu_stat);
 
+/* to check
+ *	-> first ft_atoi_safe fail : DONE -> OK !
+ *	-> second ft_atoi_safe fail : DONE -> OK !
+ *	-> third ft_atoi_safe fail : DONE -> OK !
+ *	-> fourth ft_atoi_safe fail : DONE -> OK !
+ *	-> fivth ft_atoi_safe fail : DONE -> OK !
+ *	-> check values fail : DONE -> OK !
+*/
 int	init_values(int nb_arg, char **argv, t_simu_stat *p_simu_stat)
 {
 	int	ret;
@@ -43,6 +51,13 @@ int	init_values(int nb_arg, char **argv, t_simu_stat *p_simu_stat)
 	return (check_values(nb_arg, p_simu_stat));
 }
 
+/* to do
+ *	-> nb_philos <= 0 : DONE -> OK ;
+*	-> time to die < 0 : DONE -> OK !
+*	-> time to eat < 0 : DONE -> OK !
+*	-> time to leep < 0 : DONE -> OK !
+*	-> last_check fail : DONE -> OK !
+*/
 static int	check_values(int nb_arg, t_simu_stat *p_simu_stat)
 {
 	if (p_simu_stat->nb_philos <= 0)
