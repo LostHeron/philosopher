@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:22:48 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 17:29:57 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/06 23:11:33 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 #include "utils.h"
 #include <unistd.h>
 
-static void	prepare_buffer(t_philo *p_philo, long long time, char *str);
-
+/* to check
+ *	-> pthread_mutex_lock fail : DONE -> OK !
+ *	-> write fail :  DONE -> OK !
+*/
 int	print_message_philo(t_philo *p_philo, long long time, char *str)
 {
 	int	ret;
@@ -37,17 +39,4 @@ int	print_message_philo(t_philo *p_philo, long long time, char *str)
 	}
 	else
 		return (SUCCESS);
-}
-
-static void	prepare_buffer(t_philo *p_philo, long long time, char *str)
-{
-	p_philo->buf_msg[0] = '\0';
-	p_philo->buf_msg_len = 0;
-	ft_strcat_nb(p_philo->buf_msg, &p_philo->buf_msg_len, time);
-	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, "\t");
-	ft_strcat_nb(p_philo->buf_msg, &p_philo->buf_msg_len,
-		p_philo->philo_id);
-	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, "\t");
-	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, str);
-	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, "\n");
 }

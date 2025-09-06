@@ -77,7 +77,7 @@ void	*routine(void *args)
  *
  *	To check : 
  *		-> first pthread_mutex_lock fail : DONE -> OK !
- *		-> check_death fail : TO DO ;
+ *		-> check_death fail : DONE -> OK !
  *		-> try_think fail : TO DO ;
  *		-> wait_to_shift_even_philos fial: TO DO ;
 */
@@ -88,10 +88,7 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
 
 	ret = pthread_mutex_lock(p_philo->p_start_mutex);
 	if (ret != 0)
-	{
-		ft_putstr_fd("pthread_mutex_lock failed\n", 2);
-		return (FAILURE);
-	}
+		return (pthread_mutex_lock_failure(FAILURE));
 	pthread_mutex_unlock(p_philo->p_start_mutex);
 	*p_last_meal = p_philo->ref_time;
 	*p_nb_time_eaten = 0;

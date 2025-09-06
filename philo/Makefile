@@ -6,7 +6,7 @@
 #    By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 13:51:19 by jweber            #+#    #+#              #
-#    Updated: 2025/09/04 19:55:49 by jweber           ###   ########.fr        #
+#    Updated: 2025/09/06 23:11:11 by jweber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ ROUTINE_FILES := routine.c \
 				 print_message_philo_eating.c \
 				 try_kill_philo.c \
 				 check_death.c \
+				 prepare_buffer.c \
 
 CLEAR_DIR := src/clear/
 CLEAR_FILES := clear_mutex.c \

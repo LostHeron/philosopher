@@ -6,7 +6,7 @@
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 13:37:28 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/04 17:32:08 by jweber           ###   ########.fr       */
+/*   Updated: 2025/09/06 23:11:52 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		try_think(t_philo *p_philo);
 int		check_death(t_philo *p_philo, long long last_meal, int *p_has_died);
 int		try_kill_philo(pthread_mutex_t *p_stop_exec_mutex, int *p_stop_exec,
 			t_philo *p_philo);
+void	prepare_buffer(t_philo *p_philo, long long time, char *str);
 
 #endif

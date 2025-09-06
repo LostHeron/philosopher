@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_message_philo_no_check.c                     :+:      :+:    :+:   */
+/*   prepare_buffer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jweber <jweber@student.42Lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 14:22:48 by jweber            #+#    #+#             */
-/*   Updated: 2025/09/06 23:12:34 by jweber           ###   ########.fr       */
+/*   Created: 2025/09/06 23:10:41 by jweber            #+#    #+#             */
+/*   Updated: 2025/09/06 23:11:13 by jweber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
 #include "utils.h"
-#include <unistd.h>
+#include "philo.h"
 
-int	print_message_philo_no_check(t_philo *p_philo, long long time, char *str)
+void	prepare_buffer(t_philo *p_philo, long long time, char *str)
 {
-	int	ret;
-
 	p_philo->buf_msg[0] = '\0';
 	p_philo->buf_msg_len = 0;
 	ft_strcat_nb(p_philo->buf_msg, &p_philo->buf_msg_len, time);
@@ -27,12 +24,4 @@ int	print_message_philo_no_check(t_philo *p_philo, long long time, char *str)
 	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, "\t");
 	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, str);
 	ft_strcat_str(p_philo->buf_msg, &p_philo->buf_msg_len, "\n");
-	ret = write(1, p_philo->buf_msg, p_philo->buf_msg_len);
-	if (ret < 0)
-	{
-		ft_putstr_fd("write failed\n", 2);
-		return (FAILURE);
-	}
-	else
-		return (SUCCESS);
 }
