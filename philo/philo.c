@@ -22,7 +22,7 @@ static int	get_philos_return_status(t_philo *arr_philo, int nb_philos);
 /* to check
  *	-> init_values failure : DONE -> OK !
  *	-> init_philos failure : DONE -> OK !
- *	-> start simulation fail : TO DO ;
+ *	-> start simulation fail : DONE -> OK !
 */
 int	main(int argc, char **argv)
 {
