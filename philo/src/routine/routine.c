@@ -36,8 +36,8 @@ static void	set_stop_to_true(t_philo *p_philo);
  *	but assuring that other thread will know it is locked !
  *
  *	to check : 
- *		-> routine_init fail : TO DO ;
- *		-> routine_loop fail : TO DO ;
+ *		-> routine_init fail : DONE -> OK !
+ *		-> routine_loop fail : DONE -> OK !
 */
 void	*routine(void *args)
 {
@@ -112,6 +112,11 @@ static int	routine_init(t_philo *p_philo, long long *p_last_meal,
  *	-> once done, it will try to think
  *	-> so on until, either a philosopher dies or all philosopher 
  *	have eaten enough time !
+ *
+ *	to check : 
+ *		-> try_eat fail : DONE -> OK !
+ *		-> try_sleep fail : DONE -> OK !
+ *		-> try_think fail : DONE -> OK !
 */
 static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 				int *p_stop, int *p_nb_time_eaten)
@@ -137,7 +142,8 @@ static int	routine_loop(t_philo *p_philo, long long *p_last_meal,
 }
 
 /* This function try to set p_stop_exec to true by first trying to
- * lock the mutex associated with it but then forcing it if it fails !
+ * lock the mutex associated with it but then forcing it,
+ * if it fails to lock the mutex to make sure other thread stop their execution
 */
 static void	set_stop_to_true(t_philo *p_philo)
 {

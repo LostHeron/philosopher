@@ -70,7 +70,7 @@ OBJECTS_DIR := .obj/
 OBJECTS_FILES := $(addprefix $(OBJECTS_DIR), $(C_FILES:.c=.o))
 D_FILES := $(OBJECTS_FILES:.o=.d)
 
-.PHONY: all clean fclean re git git_update debug debug_clean debug_fclean debug_re
+.PHONY: all clean fclean re debug debug_clean debug_fclean debug_re
 
 all: $(NAME)
 

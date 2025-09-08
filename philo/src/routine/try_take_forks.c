@@ -20,6 +20,10 @@ static int	try_lock_fork_print(pthread_mutex_t *p_fork_mutex, int *p_fork,
 static int	try_lock_fork(pthread_mutex_t *p_fork_mutex, int *p_fork,
 				int *p_fork_lock);
 
+/* to check
+ *	-> first try_lock_fork_print fail : DONE -> OK !
+ *	-> second try_lock_fork_print fail : DONE -> OK !
+*/
 int	try_take_forks(t_philo *p_philo, int *p_can_eat,
 		int *p_right_fork_locked, int *p_left_fork_locked)
 {
@@ -46,6 +50,11 @@ int	try_take_forks(t_philo *p_philo, int *p_can_eat,
 	return (SUCCESS);
 }
 
+/*	to check
+ *		-> try_lock_fork fail : DONE -> OK !
+ *		-> ft_get_time fail : DONE -> OK !
+ *		-> print_message_philo fail : DONE -> OK !
+*/
 static int	try_lock_fork_print(pthread_mutex_t *p_fork_mutex, int *p_fork,
 				int *p_fork_locked, t_philo *p_philo)
 {
@@ -54,24 +63,24 @@ static int	try_lock_fork_print(pthread_mutex_t *p_fork_mutex, int *p_fork,
 
 	ret = try_lock_fork(p_fork_mutex, p_fork,
 			p_fork_locked);
-	if (ret != 0)
-	{
-		ft_putstr_fd("error while trying to take right fork\n", 2);
+	if (ret != SUCCESS)
 		return (ret);
-	}
 	if (*p_fork_locked == TRUE)
 	{
 		ret = ft_get_time(&current_time);
 		if (ret != 0)
-		{
 			return (ret);
-		}
-		print_message_philo(p_philo,
-			current_time - p_philo->ref_time, "has taken a fork");
+		if (print_message_philo(p_philo,
+				current_time - p_philo->ref_time,
+				"has taken a fork") != SUCCESS)
+			return (FAILURE);
 	}
 	return (SUCCESS);
 }
 
+/* to check
+ *	-> pthread_mutex_lock fail : DONE -> OK !
+*/
 static int	try_lock_fork(pthread_mutex_t *p_fork_mutex, int *p_fork,
 				int *p_fork_locked)
 {
@@ -79,7 +88,7 @@ static int	try_lock_fork(pthread_mutex_t *p_fork_mutex, int *p_fork,
 
 	ret = pthread_mutex_lock(p_fork_mutex);
 	if (ret != 0)
-		return (ret);
+		return (pthread_mutex_lock_failure(ret));
 	if (*p_fork == AVAILABLE)
 	{
 		*p_fork = UNAVAILABLE;

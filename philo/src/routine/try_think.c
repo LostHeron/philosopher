@@ -25,14 +25,14 @@ int	try_think(t_philo *p_philo)
 	int			ret;
 
 	ret = ft_get_time(&think_start_time);
-	if (ret != 0)
+	if (ret != SUCCESS)
 	{
 		return (ret);
 	}
 	ret = print_message_philo(p_philo,
 			think_start_time - p_philo->ref_time,
 			"is thinking");
-	if (ret != 0)
+	if (ret != SUCCESS)
 	{
 		return (ret);
 	}

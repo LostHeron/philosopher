@@ -18,6 +18,11 @@
 static int	check_all_philos_finish_eaten(t_philo *p_philo,
 				int *p_nb_time_eaten);
 
+/* to check
+ *	-> pthread_mutex_lock fail : DONE -> OK !
+ *	-> write fail : DONE -> OK !
+ *	-> check_all_philios_finish_eaten fail : DONE -> OK !
+*/
 int	print_message_philo_eating(t_philo *p_philo, int *p_nb_time_eaten,
 		long long time, char *str)
 {
@@ -33,6 +38,7 @@ int	print_message_philo_eating(t_philo *p_philo, int *p_nb_time_eaten,
 		if (ret < 0)
 		{
 			ft_putstr_fd("write failed\n", 2);
+			pthread_mutex_unlock(p_philo->p_stop_exec_mutex);
 			return (FAILURE);
 		}
 	}
@@ -41,6 +47,9 @@ int	print_message_philo_eating(t_philo *p_philo, int *p_nb_time_eaten,
 	return (ret);
 }
 
+/* to check
+ *	-> pthread_mutex_lock failure : DONE -> OK !
+*/
 static int	check_all_philos_finish_eaten(t_philo *p_philo,
 				int *p_nb_time_eaten)
 {
@@ -52,7 +61,7 @@ static int	check_all_philos_finish_eaten(t_philo *p_philo,
 	{
 		ret = pthread_mutex_lock(p_philo->p_nb_finished_eaten_mutex);
 		if (ret != 0)
-			return (ret);
+			return (pthread_mutex_lock_failure(ret));
 		(*p_philo->p_nb_finished_eaten)++;
 		p_philo->nb_finished_eaten_incremented = TRUE;
 		if (*p_philo->p_nb_finished_eaten == p_philo->nb_philos)

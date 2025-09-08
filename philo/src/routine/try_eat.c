@@ -21,6 +21,10 @@ static int	prepare_eating_loop(t_philo *p_philo, int *p_stop,
 static int	free_forks(t_philo *p_philo);
 
 /* In this function the philosopher tries to eat 
+ *	to check :
+ *		-> prepare_eating_loop fail : DONE -> OK !
+ *		-> eat fail : DONE -> OK !
+ *		-> free_forks fail : DONE -> OK !
 */
 int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
 		int *p_nb_time_eaten)
@@ -52,6 +56,11 @@ int	try_eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
  *		-> is does this routine every 1000us
  *	if an error occurs or if a thread dies, it tells the thread to stop
  *	by returning a non zero value or by setting *p_stop to true respecitvely
+ *	
+ *	to check : 
+ *		-> check_death fail : DONE -> OK !
+ *		-> try_take_forks fail : DONE -> OK !
+ *		-> usleep fail : DONE -> OK !
 */
 static int	prepare_eating_loop(t_philo *p_philo, int *p_stop,
 				long long *p_last_meal)
@@ -94,16 +103,12 @@ static int	free_forks(t_philo *p_philo)
 
 	ret = pthread_mutex_lock(p_philo->p_right_fork_mutex);
 	if (ret != 0)
-	{
-		return (ret);
-	}
+		return (pthread_mutex_lock_failure(ret));
 	*p_philo->p_right_fork = AVAILABLE;
 	pthread_mutex_unlock(p_philo->p_right_fork_mutex);
 	ret = pthread_mutex_lock(p_philo->p_left_fork_mutex);
 	if (ret != 0)
-	{
-		return (ret);
-	}
+		return (pthread_mutex_lock_failure(ret));
 	*p_philo->p_left_fork = AVAILABLE;
 	pthread_mutex_unlock(p_philo->p_left_fork_mutex);
 	return (SUCCESS);

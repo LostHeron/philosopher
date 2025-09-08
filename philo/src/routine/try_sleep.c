@@ -20,6 +20,11 @@ static int	sleeping_loop(t_philo *p_philo, long long sleep_start_time,
 static int	check_finished_sleeping(long long sleep_start_time,
 				int *p_done_sleeping, int time_to_sleep);
 
+/* to check 
+ *	-> ft_get_time fail : DONE -> OK !
+ *	-> print_message_philos fail : DONE -> OK !
+ *	-> sleeping_loop fail : DONE -> OK !
+*/
 int	try_sleep(t_philo *p_philo, long long last_meal, int *p_stop)
 {
 	long long	sleep_start_time;
@@ -42,6 +47,11 @@ int	try_sleep(t_philo *p_philo, long long last_meal, int *p_stop)
 	return (sleeping_loop(p_philo, sleep_start_time, last_meal, p_stop));
 }
 
+/*	to check :
+ *		-> usleep_fail : DONE -> OK !
+ *		-> check_death fail : DONE -> OK !
+ *		-> check_finished_sleeping fail : DONE -> OK !
+*/
 static int	sleeping_loop(t_philo *p_philo, long long sleep_start_time,
 				long long last_meal, int *p_stop)
 {
@@ -53,7 +63,7 @@ static int	sleeping_loop(t_philo *p_philo, long long sleep_start_time,
 	while (done_sleeping == FALSE)
 	{
 		if (usleep(OPERATION_STEP) < 0)
-			return (FAILURE);
+			return (usleep_failure());
 		ret = check_death(p_philo, last_meal, &is_dead);
 		if (ret != 0 || is_dead == TRUE)
 		{
@@ -73,7 +83,7 @@ static int	sleeping_loop(t_philo *p_philo, long long sleep_start_time,
  * current_time - sleep_start_time >= time_to_sleep
  * if (current_time - sleep_start_time >= time_to_sleep)
  *	set *p_finished_sleep to true;
-
+ *	if it ft_get_time fails, return an error
 */
 static int	check_finished_sleeping(long long sleep_start_time,
 				int *p_done_sleeping, int time_to_sleep)
@@ -82,7 +92,7 @@ static int	check_finished_sleeping(long long sleep_start_time,
 	int			ret;
 
 	ret = ft_get_time(&current_time);
-	if (ret != 0)
+	if (ret != SUCCESS)
 		return (ret);
 	if (current_time - sleep_start_time >= time_to_sleep)
 	{

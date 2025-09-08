@@ -42,8 +42,9 @@ int	wait_to_shift_even_philos(t_philo *p_philo, int *p_stop,
 			*p_stop = TRUE;
 			return (ret);
 		}
-		ret = check_finished_waiting(last_meal, &done_waiting,
-				time_to_wait);
+		if (check_finished_waiting(last_meal, &done_waiting,
+				time_to_wait) != SUCCESS)
+			return (FAILURE);
 	}
 	return (SUCCESS);
 }

@@ -31,6 +31,11 @@ static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
  *	if an error occured or a philosopher died, it should tell calling
  *	function to stop thread execution by returning a non null integer 
  *	or by setting *p_stop to TRUE respectively
+ *
+ *	to check :
+ *		-> ft_get_time fail : DONE -> OK !
+ *		-> print_message_philo_eating fail : DONE -> OK !
+ *		-> eating_loop fail : DONE -> OK !
 */
 int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
 		int *p_nb_time_eaten)
@@ -57,6 +62,11 @@ int	eat(t_philo *p_philo, long long *p_last_meal, int *p_stop,
  * after each usleep, it : 
  *	-> check if any philosopher died
  *	-> then check if the philosopher finised eating !
+ *
+ *	to check
+ *		-> usleep fail : DONE -> OK !
+ *		-> check_death fail : DONE -> OK !
+ *		-> check_finished_eating fail : DONE -> OK !
 */
 static int	eating_loop(t_philo *p_philo, long long eat_start_time,
 				int *p_stop, long long last_meal)
@@ -83,6 +93,9 @@ static int	eating_loop(t_philo *p_philo, long long eat_start_time,
 	return (ret);
 }
 
+/*	to check :
+ *		-> ft_get_time fail : DONE -> OK !
+*/
 static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
 				int time_to_eat)
 {
@@ -90,7 +103,7 @@ static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
 	int			ret;
 
 	ret = ft_get_time(&current_time);
-	if (ret != 0)
+	if (ret != SUCCESS)
 	{
 		return (ret);
 	}
@@ -98,5 +111,5 @@ static int	check_finished_eating(long long eat_start_time, int *p_done_eating,
 	{
 		*p_done_eating = TRUE;
 	}
-	return (0);
+	return (SUCCESS);
 }
