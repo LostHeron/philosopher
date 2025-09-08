@@ -19,6 +19,34 @@
 static int	wrong_nb_args(void);
 static int	get_philos_return_status(t_philo *arr_philo, int nb_philos);
 
+/* function to change max nb of thread
+ * this program will be able to launch, may be usefull to avoid 
+ * launching 200000 thread that would make computer crash
+ * 950 is an ok value, it allows to start 200 thread, but
+ * will block around 300 (was tested once empirically)
+ * just uncomment following block and call this function 
+ * at start of main function !
+*/
+/* 
+#include <sys/resource.h>
+#include <stdio.h>
+void	changed_nb_thread_max(void)
+{
+	struct rlimit	lim;
+	int				ret;
+
+	ret = getrlimit(RLIMIT_NPROC, &lim);
+	if (ret != 0)
+		ft_putstr_fd("getrlimit failure\n", 2);
+	lim.rlim_cur = 950;
+	lim.rlim_max = 950;
+	ret = setrlimit(RLIMIT_NPROC, &lim);
+	if (ret != 0)
+		ft_putstr_fd("setrlimit failure\n", 2);
+	return ;
+}
+*/
+
 /* to check
  *	-> init_values failure : DONE -> OK !
  *	-> init_philos failure : DONE -> OK !
