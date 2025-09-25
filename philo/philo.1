@@ -1,0 +1,77 @@
+.TH PHILO 1 2025-09-15 jweber 42-CC-projects
+.SH NAME
+.PP
+philo \- start the philo program to start a multithreaded program simulating philosopher eating around a table 
+.SH SYNOPSIS
+.nf
+.fi
+.PP 
+philo 
+.IR number_of_philosophers 
+.IR time_to_die 
+.IR time_to_eat
+.IR time_to_think
+[
+.IR nb_time_each_philosopher_must_eat
+]
+.SH DESCRIPTION
+.PP
+.IP
+This is the philosopher project of the 42 school project.
+.PP
+The objective is too start a simulation in which
+.IR number_of_philosophers
+sat around a round table. Each philosopher are identified with a number from 1 to
+.IR number_of_philosophers .
+Each philosopher has a fork on their left and a fork on their right which they share with the philosopher on their left and right respectively. So the philosopher N share its right fork with philosopher N - 1 and its right fork with philosopher N + 1. So philosopher 1 share its left fork with philosopher 2 and its right fork with philosopher N. Note : if there is only one philosopher in the simulation, the left fork is same as the right fork.
+.PP
+One philosopher must alternately eat, then sleep, then think in this order. All philosopher start simulation by thinking.
+.PP
+Any state of change of a philosopher must be formatted by one of the following :
+.IP
+\- 
+.IR timestamp_in_ms
+.IR X
+has taken a fork 
+.IP
+\- 
+.IR timestamp_in_ms
+.IR X
+is eating
+.IP
+\- 
+.IR timestamp_in_ms
+.IR X
+is sleeping
+.IP
+\- 
+.IR timestamp_in_ms
+.IR X
+is thinking
+.IP
+\- 
+.IR timestamp_in_ms
+.IR X
+died
+.PP
+where : 
+.IP
+.IR timestamp_in_ms
+is the time in ms that elapsed since the beginning of the simulation
+.IP
+.IR X
+is the id of the philosopher which the stated changed
+.PP
+if 
+.IR time_to_die
+ms has elapsed since the last beginning of meal or beginning of the simulation the philosopher dies.
+.PP
+.IR time_to_eat
+is the time in ms a philosopher takes to eat. Before eating a philosopher must take the fork on its right and on its left
+.PP
+.IR time_to_sleep
+is the time in ms a philosopher takes to sleep.
+.SH OPTIONS
+	no option are used to start this program.
+.SH NOTE
+this is a test for writting a manual page.
